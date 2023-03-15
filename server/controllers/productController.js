@@ -1,5 +1,5 @@
-const uuid = require("uuid");
-const path = require("path");
+// const uuid = require("uuid");
+// const path = require("path");
 const { Product, ProductImg } = require("../models/models");
 const ApiError = require("../error/ApiError");
 
@@ -20,17 +20,6 @@ class productController {
         sizeId,
       });
 
-      // if (info) {
-      //   info = JSON.parse(info);
-      //   info.forEach((i) =>
-      //     DeviceInfo.create({
-      //       title: i.title,
-      //       description: i.description,
-      //       deviceId: device.id,
-      //     })
-      //   );
-      // }
-
       return res.json(product);
     } catch (e) {
       next(ApiError.badRequest(e.message));
@@ -50,30 +39,23 @@ class productController {
       ...(colorId && { colorId }),
       ...(sizeId && { sizeId }),
     };
-
-    if (check.length > 0) {
-      products = await Product.findAndCountAll({
-        where: check,
-        limit,
-        offset,
-      });
-    } else {
-      products = await Product.findAndCountAll({
-        limit,
-        offset,
-      });
-    }
+    console.log(check);
+    products = await Product.findAndCountAll({
+      where: check,
+      limit,
+      offset,
+    });
 
     return res.json(products);
   }
-
-  // async getOne(req, res) {
-  //   const { id } = req.params;
-  //   const product = await Product.findOne({
-  //     where: { id },
-  //     include: [{ model: ProductImg, as: "img" }],
-  //   });
-  //   return res.json(product);
-  // }
 }
 module.exports = new productController();
+
+//  let checkList = Object.entries(req.query)
+//  checkList = checkList.filter(([key, value]) => value)
+
+// let result = bookList.filter((item) => {
+//   return checkList.every(([key, value]) => {
+//     item[key] === value
+//   })
+// })

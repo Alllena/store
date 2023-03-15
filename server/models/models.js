@@ -45,7 +45,7 @@ const Size = sequelize.define("size", {
   sales: { type: DataTypes.INTEGER, unique: true, allowNull: false },
 });
 
-const Specs = sequelize.define("specs", {
+const Spec = sequelize.define("spec", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
 });
@@ -63,16 +63,16 @@ const Rating = sequelize.define("rating", {
 const TypeSize = sequelize.define("type_size", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
-const TypeSpecs = sequelize.define("type_specs", {
+const TypeSpec = sequelize.define("type_spec", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 const TypeColor = sequelize.define("type_color", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
-const SpecsSize = sequelize.define("specs_size", {
+const SpecSize = sequelize.define("spec_size", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
-const SpecsColor = sequelize.define("specs_color", {
+const SpecColor = sequelize.define("spec_color", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 const ColorSize = sequelize.define("color_size", {
@@ -94,8 +94,8 @@ Product.belongsTo(Type);
 Size.hasMany(Product);
 Product.belongsTo(Size);
 
-Specs.hasMany(Product);
-Product.belongsTo(Specs);
+Spec.hasMany(Product);
+Product.belongsTo(Spec);
 
 Color.hasMany(Product);
 Product.belongsTo(Color);
@@ -112,17 +112,17 @@ ProductImg.belongsTo(Product);
 Type.belongsToMany(Size, { through: TypeSize });
 Size.belongsToMany(Type, { through: TypeSize });
 
-Type.belongsToMany(Specs, { through: TypeSpecs });
-Specs.belongsToMany(Type, { through: TypeSpecs });
+Type.belongsToMany(Spec, { through: TypeSpec });
+Spec.belongsToMany(Type, { through: TypeSpec });
 
 Type.belongsToMany(Color, { through: TypeColor });
 Color.belongsToMany(Type, { through: TypeColor });
 
-Specs.belongsToMany(Size, { through: SpecsSize });
-Size.belongsToMany(Specs, { through: SpecsSize });
+Spec.belongsToMany(Size, { through: SpecSize });
+Size.belongsToMany(Spec, { through: SpecSize });
 
-Specs.belongsToMany(Color, { through: SpecsColor });
-Color.belongsToMany(Specs, { through: SpecsColor });
+Spec.belongsToMany(Color, { through: SpecColor });
+Color.belongsToMany(Spec, { through: SpecColor });
 
 Color.belongsToMany(Size, { through: ColorSize });
 Size.belongsToMany(Color, { through: ColorSize });
@@ -135,13 +135,13 @@ module.exports = {
   ProductImg,
   Size,
   Type,
-  Specs,
+  Spec,
   Color,
   Rating,
   TypeSize,
-  TypeSpecs,
+  TypeSpec,
   TypeColor,
-  SpecsSize,
-  SpecsColor,
+  SpecSize,
+  SpecColor,
   ColorSize,
 };
