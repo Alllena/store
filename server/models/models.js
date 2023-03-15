@@ -23,7 +23,7 @@ const Product = sequelize.define("product", {
   rating: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
 
-const ProductImg = sequelize.define("product_img", {
+const Img = sequelize.define("img", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   mainView: { type: DataTypes.STRING, allowNull: false },
   secondView: { type: DataTypes.STRING, allowNull: false },
@@ -89,11 +89,11 @@ Product.belongsTo(Color);
 Model.hasMany(Product);
 Product.belongsTo(Model);
 
-Model.hasMany(ProductImg);
-ProductImg.belongsTo(Model);
+Model.hasMany(Img);
+Img.belongsTo(Model);
 
-Color.hasMany(ProductImg);
-ProductImg.belongsTo(Color);
+Color.hasMany(Img);
+Img.belongsTo(Color);
 
 Product.hasMany(Rating);
 Rating.belongsTo(Product);
@@ -101,8 +101,8 @@ Rating.belongsTo(Product);
 Product.hasMany(BasketProduct);
 BasketProduct.belongsTo(Product);
 
-ProductImg.hasOne(Product);
-Product.belongsTo(ProductImg, { as: "img" });
+Img.hasOne(Product);
+Product.belongsTo(Img, { as: "img" });
 
 Type.belongsToMany(Size, { through: TypeSize });
 Size.belongsToMany(Type, { through: TypeSize });
@@ -118,7 +118,7 @@ module.exports = {
   Basket,
   BasketProduct,
   Product,
-  ProductImg,
+  Img,
   Size,
   Type,
   Color,

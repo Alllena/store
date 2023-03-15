@@ -20,3 +20,5 @@ _npm init -y_ запуск проекта;
 _npm install express pg pg-hstore sequelize cors dotenv_ - установка зависимостей express, postgres (pg, pg-hstore), sequelize, cors(для обращения с браузера к серверу), dotenv;
 _npm install -D nodemon_ - для автоматического перезапуска сервера при сохранении (нужен только при разработке);
 _npm i jsonwebtoken bcrypt_ - для генерации токена и хеширования паролей
+_npm i express-fileupload_ - для загрузки файлов
+_npm i uuid_ -для генерации случайных id
