@@ -4,7 +4,8 @@ const productRouter = require("./productRouter");
 const userRouter = require("./userRouter");
 const colorRouter = require("./colorRouter");
 const sizeRouter = require("./sizeRouter");
-const modelRouter = require("./modelRouter");
+const colorLineRouter = require("./colorLineRouter");
+const sizeLineRouter = require("./sizeLineRouter");
 const typeRouter = require("./typeRouter");
 const imgRouter = require("./imgRouter");
 
@@ -13,7 +14,8 @@ router.use("/user", userRouter);
 router.use("/type", typeRouter);
 router.use("/color", colorRouter);
 router.use("/size", sizeRouter);
-router.use("/model", modelRouter);
+router.use("/colorLine", colorLineRouter);
+router.use("/sizeLine", sizeLineRouter);
 router.use("/img", imgRouter);
 
 module.exports = router;

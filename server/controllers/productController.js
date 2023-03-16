@@ -1,21 +1,19 @@
 // const uuid = require("uuid");
 // const path = require("path");
-const { Product, Img } = require("../models/models");
+const { Product, Img, SizeLine, ColorLine } = require("../models/models");
 const ApiError = require("../error/ApiError");
 
 class productController {
   async create(req, res, next) {
     try {
-      let { modelId, price, sales, typeId, colorId, sizeId, imgId } = req.body;
+      let { name, info, price, sales, typeId } = req.body;
 
       const product = await Product.create({
-        modelId,
+        name,
+        info,
         price,
         sales,
         typeId,
-        colorId,
-        sizeId,
-        imgId,
       });
 
       return res.json(product);
@@ -25,7 +23,7 @@ class productController {
   }
 
   async getAll(req, res) {
-    let { typeId, modelId, colorId, sizeId, limit, page } = req.query;
+    let { typeId, limit, page } = req.query;
     limit = limit || 20;
     page = page || 1;
     let offset = page * limit - limit;
@@ -33,13 +31,11 @@ class productController {
 
     const check = {
       ...(typeId && { typeId }),
-      ...(modelId && { modelId }),
-      ...(colorId && { colorId }),
-      ...(sizeId && { sizeId }),
     };
     console.log(check);
     products = await Product.findAndCountAll({
       where: check,
+      include: [{ model: SizeLine, model: ColorLine }],
       limit,
       offset,
     });
@@ -50,8 +46,7 @@ class productController {
     const { id } = req.params;
     const product = await Product.findOne({
       where: { id },
-      include: [{ model: Img, as: "img" }],
-      // include: [{ model: DeviceInfo, as: "info" }],
+      include: [{ model: SizeLine, model: ColorLine }],
     });
     return res.json(product);
   }

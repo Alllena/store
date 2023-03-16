@@ -7,7 +7,7 @@ const { Img } = require("../models/models");
 class imgController {
   async create(req, res) {
     const collectionImg = req.files;
-    const { modelId, colorId } = req.body;
+    const { colorLineId } = req.body;
 
     let imgFileName = {};
     for (let key in collectionImg) {
@@ -17,8 +17,7 @@ class imgController {
     }
 
     const img = await Img.create({
-      modelId,
-      colorId,
+      colorLineId,
       ...imgFileName,
     });
 
