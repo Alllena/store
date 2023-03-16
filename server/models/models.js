@@ -101,7 +101,7 @@ Rating.belongsTo(Product);
 Product.hasMany(BasketProduct);
 BasketProduct.belongsTo(Product);
 
-Img.hasOne(Product);
+Img.hasMany(Product);
 Product.belongsTo(Img, { as: "img" });
 
 Type.belongsToMany(Size, { through: TypeSize });

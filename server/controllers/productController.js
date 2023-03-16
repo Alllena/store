@@ -1,23 +1,21 @@
 // const uuid = require("uuid");
 // const path = require("path");
-const { Product, ProductImg } = require("../models/models");
+const { Product, Img } = require("../models/models");
 const ApiError = require("../error/ApiError");
 
 class productController {
   async create(req, res, next) {
     try {
-      let { name, price, sales, info, typeId, specsId, colorId, sizeId } =
-        req.body;
+      let { modelId, price, sales, typeId, colorId, sizeId, imgId } = req.body;
 
       const product = await Product.create({
-        name,
+        modelId,
         price,
         sales,
-        info,
         typeId,
-        specsId,
         colorId,
         sizeId,
+        imgId,
       });
 
       return res.json(product);
@@ -27,7 +25,7 @@ class productController {
   }
 
   async getAll(req, res) {
-    let { typeId, specsId, colorId, sizeId, limit, page } = req.query;
+    let { typeId, modelId, colorId, sizeId, limit, page } = req.query;
     limit = limit || 20;
     page = page || 1;
     let offset = page * limit - limit;
@@ -35,7 +33,7 @@ class productController {
 
     const check = {
       ...(typeId && { typeId }),
-      ...(specsId && { specsId }),
+      ...(modelId && { modelId }),
       ...(colorId && { colorId }),
       ...(sizeId && { sizeId }),
     };
@@ -48,14 +46,14 @@ class productController {
 
     return res.json(products);
   }
+  async getOne(req, res) {
+    const { id } = req.params;
+    const product = await Product.findOne({
+      where: { id },
+      include: [{ model: Img, as: "img" }],
+      // include: [{ model: DeviceInfo, as: "info" }],
+    });
+    return res.json(product);
+  }
 }
 module.exports = new productController();
-
-//  let checkList = Object.entries(req.query)
-//  checkList = checkList.filter(([key, value]) => value)
-
-// let result = bookList.filter((item) => {
-//   return checkList.every(([key, value]) => {
-//     item[key] === value
-//   })
-// })
