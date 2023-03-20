@@ -13,8 +13,10 @@
 - Переходим на свою ветку `git checkout alena.khatkevich`.
 - Далее `git merge main`
 - Удалить старую ветку `git branch -D alena.khatkevich-hw_?`
+  `___________________________________________________`
+  <!--! server -->
+  `___________________________________________________`
 
-!server!
 _cd server_ переход в папку server;
 _npm init -y_ запуск проекта;
 _npm install express pg pg-hstore sequelize cors dotenv_ - установка зависимостей express, postgres (pg, pg-hstore), sequelize, cors(для обращения с браузера к серверу), dotenv;
@@ -22,3 +24,14 @@ _npm install -D nodemon_ - для автоматического перезап�
 _npm i jsonwebtoken bcrypt_ - для генерации токена и хеширования паролей
 _npm i express-fileupload_ - для загрузки файлов
 _npm i uuid_ -для генерации случайных id
+
+`___________________________________________________`
+
+<!--! client -->
+
+`___________________________________________________`
+_npx create-react-app . --template typescript_ - создание проекта _react_ с шаблоном
+_npm i react-router-dom @types/react-router-dom_ установка компонентов _react router_ и их типов
+_npm install @reduxjs/toolkit react-redux @types/react-redux_ установка redux toolkit и типов для него
+
+_npm i styled-components --save-dev_ установка компонентов _styled-components_
