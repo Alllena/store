@@ -35,3 +35,4 @@ _npm i react-router-dom @types/react-router-dom_ установка компон
 _npm install @reduxjs/toolkit react-redux @types/react-redux_ установка redux toolkit и типов для него
 
 _npm i styled-components --save-dev_ установка компонентов _styled-components_
+_npm i --save-dev @types/styled-components_ установка типов
