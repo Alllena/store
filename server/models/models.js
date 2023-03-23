@@ -67,6 +67,14 @@ const ColorSize = sequelize.define("color_size", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
+const ColorImg = sequelize.define("color_img", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
+const ProductImg = sequelize.define("product_img", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
@@ -97,8 +105,14 @@ SizeLine.belongsTo(Size);
 Type.hasMany(Product);
 Product.belongsTo(Type);
 
-ColorLine.hasOne(Img);
-Img.belongsTo(ColorLine);
+// ColorLine.hasOne(Img);
+// Img.belongsTo(ColorLine);
+
+Color.belongsToMany(Img, { through: ColorImg });
+Img.belongsToMany(Color, { through: ColorImg });
+
+Product.belongsToMany(Img, { through: ProductImg });
+Img.belongsToMany(Product, { through: ProductImg });
 
 Color.belongsToMany(Product, { through: ColorLine });
 Product.belongsToMany(Color, { through: ColorLine });
