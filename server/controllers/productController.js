@@ -7,6 +7,7 @@ const {
   ColorLine,
   Color,
   Size,
+  Type,
 } = require("../models/models");
 const ApiError = require("../error/ApiError");
 
@@ -47,6 +48,12 @@ class productController {
         {
           model: Color,
           attributes: ["id", "name"],
+          include: [
+            {
+              model: Img,
+              attributes: ["id", "mainView", "secondView"],
+            },
+          ],
           through: {
             attributes: [
               /* атрибуты соединительной таблицы */
@@ -63,8 +70,6 @@ class productController {
           },
         },
       ],
-
-      // include: [{ model: SizeLine, model: ColorLine }],
       limit,
       offset,
     });
@@ -75,8 +80,31 @@ class productController {
     const { id } = req.params;
     const product = await Product.findOne({
       where: { id },
-      // include: [{ model: Color }],
-      // include: [{ model: SizeLine }],
+      attributes: ["id", "name", "price", "sales", "info"],
+      include: [
+        {
+          model: Type,
+          attributes: ["id", "name"],
+        },
+        {
+          model: Color,
+          attributes: ["id", "name"],
+          through: {
+            attributes: [
+              /* атрибуты соединительной таблицы */
+            ],
+          },
+        },
+        {
+          model: Size,
+          attributes: ["id", "name"],
+          through: {
+            attributes: [
+              /* атрибуты соединительной таблицы */
+            ],
+          },
+        },
+      ],
     });
     return res.json(product);
   }
