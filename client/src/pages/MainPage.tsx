@@ -15,8 +15,9 @@ export default MainPage;
 
 const PageWrapper = styled.div`
   padding: 20px 150px;
-  /* height: 20%;
+  /* height: 20%; */
   display: flex;
-  justify-content: space-between; */
+  gap: 20 px;
+  justify-content: space-between;
   background: #ccc;
 `;

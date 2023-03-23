@@ -1,6 +1,13 @@
 // const uuid = require("uuid");
 // const path = require("path");
-const { Product, Img, SizeLine, ColorLine } = require("../models/models");
+const {
+  Product,
+  Img,
+  SizeLine,
+  ColorLine,
+  Color,
+  Size,
+} = require("../models/models");
 const ApiError = require("../error/ApiError");
 
 class productController {
@@ -35,7 +42,29 @@ class productController {
     console.log(check);
     products = await Product.findAndCountAll({
       where: check,
-      include: [{ model: SizeLine, model: ColorLine }],
+      attributes: ["id", "name", "price", "sales"],
+      include: [
+        {
+          model: Color,
+          attributes: ["id", "name"],
+          through: {
+            attributes: [
+              /* атрибуты соединительной таблицы */
+            ],
+          },
+        },
+        {
+          model: Size,
+          attributes: ["id", "name"],
+          through: {
+            attributes: [
+              /* атрибуты соединительной таблицы */
+            ],
+          },
+        },
+      ],
+
+      // include: [{ model: SizeLine, model: ColorLine }],
       limit,
       offset,
     });
@@ -46,9 +75,11 @@ class productController {
     const { id } = req.params;
     const product = await Product.findOne({
       where: { id },
-      include: [{ model: SizeLine, model: ColorLine }],
+      // include: [{ model: Color }],
+      // include: [{ model: SizeLine }],
     });
     return res.json(product);
   }
 }
+
 module.exports = new productController();

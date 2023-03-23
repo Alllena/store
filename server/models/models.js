@@ -100,6 +100,12 @@ Product.belongsTo(Type);
 ColorLine.hasOne(Img);
 Img.belongsTo(ColorLine);
 
+Color.belongsToMany(Product, { through: ColorLine });
+Product.belongsToMany(Color, { through: ColorLine });
+
+Size.belongsToMany(Product, { through: SizeLine });
+Product.belongsToMany(Size, { through: SizeLine });
+
 ColorLine.belongsToMany(SizeLine, { through: ColorSize });
 SizeLine.belongsToMany(ColorLine, { through: ColorSize });
 
