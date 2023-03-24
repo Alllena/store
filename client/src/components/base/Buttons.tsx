@@ -35,17 +35,18 @@ const ButtonWrapper = styled.button<ButtonProps>`
     props.look === "main"
       ? "#000"
       : props.look === "extra"
-      ? "#2745ac"
+      ? "#4096ff"
       : "#fff"};
   font-family: "Circular", sans-serif;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 22px;
   display: flex;
+  border: none;
   gap: 1rem;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: 20px;
+  padding: 15px 20px;
 
   &:hover {
     background-color: ${(props) =>
@@ -53,6 +54,6 @@ const ButtonWrapper = styled.button<ButtonProps>`
         ? "transparent"
         : props.look === "extra"
         ? "#000"
-        : "#2745ac"};
+        : "#4096ff"};
   }
 `;
