@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { FlexContainer } from "../styled/FlexContainer";
+import { FlexContainer } from "../components/styled/FlexContainer";
 import { Input } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { REGISTRATION_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from "../utils/consts";
+import { REGISTRATION_ROUTE, LOGIN_ROUTE } from "../utils/consts";
 
 const LoginPage = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);

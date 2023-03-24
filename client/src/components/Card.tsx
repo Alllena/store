@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { FlexContainer } from "../styled/FlexContainer";
+import { FlexContainer } from "./styled/FlexContainer";
 import { ShoppingFilled } from "@ant-design/icons";
+import Button from "./base/Buttons";
 
 interface Product {
   name: string;
@@ -50,9 +51,9 @@ const Card: React.FC<Props> = ({ product, colors, size }) => {
             )}
           </FlexContainer>
         </FlexContainer>
-        <FlexContainer className="basket__wrapper">
-          <ShoppingFilled className="basket" />
-        </FlexContainer>
+        <Button onClick={() => {}}>
+          <ShoppingFilled />
+        </Button>
       </FlexContainer>
     </CardWrapper>
   );
@@ -100,33 +101,16 @@ const CardWrapper = styled.div`
     }
   }
   .info__bloc {
-    .basket__wrapper {
-      padding: 20px;
-      height: 60px;
-      width: 60px;
-      background-color: #000;
-      &:hover {
-        background-color: #2745ac;
+  }
+  .product__prase {
+    .price {
+      font-weight: 700;
+      &.price-discount {
+        color: #c20000;
       }
-      .basket {
-        cursor: pointer;
-        color: #fff;
-        font-size: 24px;
-        &:hover {
-          color: #fff;
-        }
-      }
-    }
-    .product__prase {
-      .price {
-        font-weight: 700;
-        &.price-discount {
-          color: #c20000;
-        }
-        &.price-before {
-          text-decoration: line-through;
-          font-weight: 300;
-        }
+      &.price-before {
+        text-decoration: line-through;
+        font-weight: 300;
       }
     }
   }
