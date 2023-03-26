@@ -25,8 +25,6 @@ const PageWrapper = styled.div`
   height: 100%;
   width: 100%;
   min-height: 100vh;
-  /* display: flex; */
-  /* flex-direction: column; */
   gap: 20 px;
   justify-content: space-between;
   background: #fff;
@@ -36,8 +34,8 @@ const PageWrapper = styled.div`
     background-color: #4096ff;
   }
   .header {
-    padding: 20px 10px;
-    /* height: 50px; */
+    height: 100px;
+    padding: 0 40px;
     position: -webkit-sticky;
     position: sticky;
     top: 0;
@@ -46,6 +44,8 @@ const PageWrapper = styled.div`
     background: #fff;
   }
   .wrapper__outlet {
-    padding: 20px 150px;
+    margin: 0 auto;
+    min-width: 90vw;
+    padding: 20px 10px;
   }
 `;

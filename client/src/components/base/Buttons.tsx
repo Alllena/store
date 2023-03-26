@@ -6,7 +6,7 @@ import { FlexContainer } from "../styled/FlexContainer";
 export enum ButtonLook {
   extra = "extra",
   main = "main",
-  icon = "icon",
+  header = "header",
 }
 
 interface ButtonProps {
@@ -31,20 +31,20 @@ const ButtonWrapper = styled.button<ButtonProps>`
       ? "transparent"
       : props.look === "extra"
       ? "transparent"
-      : props.look === "icon"
+      : props.look === "header"
       ? "transparent"
       : "#000"};
   color: ${(props) =>
     props.look === "main"
       ? "#000"
-      : props.look === "icon"
+      : props.look === "header"
       ? "#000"
       : props.look === "extra"
       ? "#4096ff"
       : "#fff"};
   font-family: "Circular", sans-serif;
   font-weight: 700;
-  font-size: ${(props) => (props.look === "icon" ? "40px" : "22px")};
+  font-size: ${(props) => (props.look === "header" ? "36px" : "22px")};
   display: flex;
   border: none;
   gap: 1rem;
@@ -57,14 +57,14 @@ const ButtonWrapper = styled.button<ButtonProps>`
     background-color: ${(props) =>
       props.look === "main"
         ? "transparent"
-        : props.look === "icon"
+        : props.look === "header"
         ? "transparent"
         : props.look === "extra"
         ? "#000"
         : "#4096ff"};
 
     color: ${(props) =>
-      props.look === "icon"
+      props.look === "header"
         ? "#4096ff"
         : props.look === "extra"
         ? "#4096ff"
