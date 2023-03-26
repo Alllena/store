@@ -57,7 +57,6 @@ export default LoginPage;
 const PageWrapper = styled.div`
   font-size: 22px;
   font-weight: 300;
-  background: #fff;
   display: flex;
   gap: 50px;
   width: 100%;

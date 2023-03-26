@@ -31,6 +31,20 @@ const ShopPage = () => {
       price: 1000,
       sales: 0,
     },
+    {
+      id: 5,
+      name: "Materia Studio 4",
+      img: "/img/one_model/lane-black.jpg",
+      price: 1000,
+      sales: 20,
+    },
+    {
+      id: 6,
+      name: "Materia Studio 4",
+      img: "/img/one_model/lane-black.jpg",
+      price: 1000,
+      sales: 5,
+    },
   ];
 
   const colors = ["red", "black", "white", "beige"];
@@ -50,5 +64,4 @@ const PageWrapper = styled.div`
   flex-wrap: wrap;
   gap: 50px;
   justify-content: space-between;
-  background: #ccc;
 `;

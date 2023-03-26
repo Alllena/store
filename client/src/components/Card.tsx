@@ -37,7 +37,7 @@ const Card: React.FC<Props> = ({ product, colors, size }) => {
       </FlexContainer>
       <FlexContainer className="info__bloc" wrap="nowrap">
         <FlexContainer direction="column" wrap="nowrap" align="start">
-          <div className="product__name">{product.name}</div>0
+          <div className="product__name">{product.name}</div>
           <FlexContainer className="product__prase" justify="start">
             {product.sales > 0 ? (
               <FlexContainer justify="start">
@@ -117,8 +117,9 @@ const CardWrapper = styled.div`
 `;
 
 const Color = styled.div`
-  min-height: 1.5rem;
-  min-width: 1.5rem;
+  min-height: 27px;
+  min-width: 27px;
   border-radius: 50%;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
   background-color: ${(props) => props.color || ""};
 `;
