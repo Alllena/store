@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage";
 import AdminPage from "./pages/AdminPage";
 import BasketPage from "./pages/BasketPage";
 import LoginPage from "./pages/LoginPage";
-import ProductPage from "./pages/ProductPage";
+import ProductPage from "./pages/ProductPage.jsx";
 import {
   MAIN_ROUTE,
   HOME_ROUTE,

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ColorBlok from "./ColorBlok";
+import SalesLabel from "./SalesLabel";
 import SizeBlok from "./SizeBlok";
 import { FlexContainer } from "./styled/FlexContainer";
 
@@ -31,7 +32,7 @@ const InfoBlok = ({
               €{price - (sales / 100) * price}
             </div>
             <div className="price price-before">€{price}</div>
-            <FlexContainer className="sales">-{sales}%</FlexContainer>
+            <SalesLabel sales={sales} />
           </FlexContainer>
         ) : (
           <div className="price">€{price}</div>
