@@ -22,11 +22,9 @@ const MainPage = () => {
 export default MainPage;
 
 const PageWrapper = styled.div`
-  height: 100%;
-  width: 100%;
+  display: grid;
+  grid-template-rows: 40px 100px 1fr;
   min-height: 100vh;
-  gap: 20 px;
-  justify-content: space-between;
   background: #fff;
   .row {
     height: 40px;
@@ -45,7 +43,7 @@ const PageWrapper = styled.div`
   }
   .wrapper__outlet {
     margin: 0 auto;
-    min-width: 90vw;
-    padding: 20px 10px;
+    width: 90vw;
+    padding: 0 5px;
   }
 `;
