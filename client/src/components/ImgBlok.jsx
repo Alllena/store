@@ -20,7 +20,7 @@ const ImgBlok = ({ images }) => {
   return (
     <Wrapper>
       <img className="img__main" src={isMain} alt="a" />
-      <FlexContainer className="img__blok" direction="column">
+      <FlexContainer className="img__blok" direction="column" gap="5">
         {images.map(
           (image) =>
             isActive === image.id ? (
@@ -51,7 +51,7 @@ const ImgBlok = ({ images }) => {
 export default ImgBlok;
 
 const Wrapper = styled.div`
-  flex: 2;
+  flex: 1.5;
   display: flex;
   .img__main {
     max-height: 90vh;
@@ -60,8 +60,8 @@ const Wrapper = styled.div`
   .img__blok {
     width: 40%;
     .img__item {
-      height: 120px;
-      width: 120px;
+      height: 110px;
+      width: 110px;
       &.active {
         border: 1px solid #4096ff;
         background-color: #4096ff19;
