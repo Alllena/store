@@ -15,6 +15,6 @@ export const FlexContainer = styled.div<Props>`
   justify-content: ${({ justify }) => justify || "center"};
   align-items: ${({ align }) => align || "center"};
   gap: ${({ gap }) => gap || "10px"};
-  height: 100%;
-  width: 100%;
+  /* height: 100%; */
+  /* width: 100%; */
 `;
