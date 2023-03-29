@@ -13,12 +13,16 @@ interface ButtonProps {
   onClick: () => void;
   children?: ReactElement | React.ReactNode;
   look?: ButtonLook;
+  text?: string;
 }
 
-const Button: FC<ButtonProps> = ({ onClick, look, children }) => {
+const Button: FC<ButtonProps> = ({ onClick, look, children, text }) => {
   return (
     <ButtonWrapper onClick={onClick} look={look}>
-      <FlexContainer>{children}</FlexContainer>
+      <FlexContainer>
+        {children}
+        {text}
+      </FlexContainer>
     </ButtonWrapper>
   );
 };
@@ -44,7 +48,8 @@ const ButtonWrapper = styled.button<ButtonProps>`
       : "#fff"};
   font-family: "Circular", sans-serif;
   font-weight: 700;
-  font-size: ${(props) => (props.look === "header" ? "36px" : "22px")};
+  font-size: ${(props) =>
+    props.look === "header" ? "36px" : props.text ? "20px" : "22px"};
   display: flex;
   border: none;
   gap: 1rem;
