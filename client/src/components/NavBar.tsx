@@ -29,7 +29,7 @@ const NavBar = () => {
             {item.name}
           </Link>
         ))}
-        <Link to={SHOP_ROUTE}>Special Prises</Link>
+        <Link to={SHOP_ROUTE}>Special Prices</Link>
       </FlexContainer>
       <FlexContainer className="navbar__user" justify="end" gap="10">
         <Button onClick={() => {}} look={ButtonLook.header}>
