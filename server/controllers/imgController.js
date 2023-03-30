@@ -2,26 +2,28 @@ const uuid = require("uuid");
 const path = require("path");
 
 const { Img } = require("../models/models");
-// const ApiError = require("../error/ApiError");
+const ApiError = require("../error/ApiError");
 
 class imgController {
-  async create(req, res) {
-    const collectionImg = req.files;
-    const { colorLineId } = req.body;
-
-    let imgFileName = {};
-    for (let key in collectionImg) {
+  async create(req, res, next) {
+    try {
+      let { productId, isMain, isSecond } = req.body;
+      let { file } = req.files;
+      console.log(file);
       let fileName = uuid.v4() + ".jpg";
-      collectionImg[key].mv(path.resolve(__dirname, "..", "static", fileName));
-      imgFileName[key] = fileName;
+      file.mv(path.resolve(__dirname, "..", "static", fileName));
+
+      const img = await Img.create({
+        productId,
+        isMain,
+        isSecond,
+        file: fileName,
+      });
+
+      return res.json(img);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
     }
-
-    const img = await Img.create({
-      colorLineId,
-      ...imgFileName,
-    });
-
-    return res.json(img);
   }
   async getAll(reg, res) {
     const imgs = await Img.findAll();

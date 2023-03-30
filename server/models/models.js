@@ -18,21 +18,23 @@ const BasketProduct = sequelize.define("basket_product", {
 
 const Product = sequelize.define("product", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  name: { type: DataTypes.STRING, unique: true, allowNull: false },
   info: { type: DataTypes.STRING, allowNull: false },
   price: { type: DataTypes.INTEGER, allowNull: false },
   sales: { type: DataTypes.INTEGER, allowNull: false },
   rating: { type: DataTypes.INTEGER, defaultValue: 0 },
+  isNew: { type: DataTypes.BOOLEAN, allowNull: false },
 });
 
 const Img = sequelize.define("img", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  mainView: { type: DataTypes.STRING, allowNull: false },
-  secondView: { type: DataTypes.STRING, allowNull: false },
-  topView: { type: DataTypes.STRING, allowNull: false },
-  sideView: { type: DataTypes.STRING, allowNull: false },
-  bottomView: { type: DataTypes.STRING, allowNull: false },
-  fastenerView: { type: DataTypes.STRING, allowNull: false },
+  isMain: { type: DataTypes.BOOLEAN, allowNull: false },
+  isSecond: { type: DataTypes.BOOLEAN, allowNull: false },
+  file: { type: DataTypes.STRING, allowNull: false },
+});
+
+const Model = sequelize.define("model", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, unique: true, allowNull: false },
 });
 
 const Type = sequelize.define("type", {
@@ -50,28 +52,20 @@ const Color = sequelize.define("color", {
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
 });
 
-const ColorLine = sequelize.define("color_line", {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-});
-
-const SizeLine = sequelize.define("size_line", {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-});
-
 const Rating = sequelize.define("rating", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   rate: { type: DataTypes.INTEGER, allowNull: false },
 });
 
-const ColorSize = sequelize.define("color_size", {
+const ProductSize = sequelize.define("product_size", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-const ColorImg = sequelize.define("color_img", {
+const ProductColor = sequelize.define("product_color", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-const ProductImg = sequelize.define("product_img", {
+const ModelColor = sequelize.define("model_color", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
@@ -86,42 +80,52 @@ BasketProduct.belongsTo(Basket);
 
 Product.hasMany(BasketProduct);
 BasketProduct.belongsTo(Product);
-
+// !_______________________
 Product.hasMany(Rating);
 Rating.belongsTo(Product);
 
-Product.hasMany(SizeLine);
-SizeLine.belongsTo(Product);
+Product.hasMany(Img);
+Img.belongsTo(Product);
 
-Product.hasMany(ColorLine);
-ColorLine.belongsTo(Product);
-
-Color.hasMany(ColorLine);
-ColorLine.belongsTo(Color);
-
-Size.hasMany(SizeLine);
-SizeLine.belongsTo(Size);
+// !______________________
+Model.hasMany(Product);
+Product.belongsTo(Model);
 
 Type.hasMany(Product);
 Product.belongsTo(Type);
 
-// ColorLine.hasOne(Img);
-// Img.belongsTo(ColorLine);
+Color.hasMany(Product);
+Product.belongsTo(Color);
+// !_______________________
 
-Color.belongsToMany(Img, { through: ColorImg });
-Img.belongsToMany(Color, { through: ColorImg });
+Size.hasMany(ProductSize);
+ProductSize.belongsTo(Size);
 
-Product.belongsToMany(Img, { through: ProductImg });
-Img.belongsToMany(Product, { through: ProductImg });
+Product.hasMany(ProductSize);
+ProductSize.belongsTo(Product);
 
-Color.belongsToMany(Product, { through: ColorLine });
-Product.belongsToMany(Color, { through: ColorLine });
+// !_________________________
+Product.hasMany(ProductColor);
+ProductColor.belongsTo(Product);
 
-Size.belongsToMany(Product, { through: SizeLine });
-Product.belongsToMany(Size, { through: SizeLine });
+Color.hasMany(ProductColor);
+ProductColor.belongsTo(Color);
 
-ColorLine.belongsToMany(SizeLine, { through: ColorSize });
-SizeLine.belongsToMany(ColorLine, { through: ColorSize });
+// !_________________________
+Model.hasMany(ModelColor);
+ModelColor.belongsTo(Model);
+
+Color.hasMany(ModelColor);
+ModelColor.belongsTo(Color);
+
+Color.belongsToMany(Model, { through: ModelColor });
+Model.belongsToMany(Color, { through: ModelColor });
+
+Size.belongsToMany(Product, { through: ProductSize });
+Product.belongsToMany(Size, { through: ProductSize });
+
+Product.belongsToMany(Color, { through: ProductColor });
+Color.belongsToMany(Product, { through: ProductColor });
 
 module.exports = {
   User,
@@ -129,11 +133,12 @@ module.exports = {
   BasketProduct,
   Product,
   Img,
+  Model,
   Size,
   Type,
   Color,
   Rating,
-  ColorSize,
-  ColorLine,
-  SizeLine,
+  ModelColor,
+  ProductColor,
+  ProductSize,
 };

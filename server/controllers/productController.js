@@ -1,28 +1,48 @@
 // const uuid = require("uuid");
 // const path = require("path");
 const {
+  User,
+  Basket,
+  BasketProduct,
   Product,
-  Img,
-  SizeLine,
-  ColorLine,
-  Color,
+  Image,
+  Model,
   Size,
   Type,
+  Color,
+  Rating,
+  ModelColor,
+  ProductColor,
+  ProductSize,
+  Img,
 } = require("../models/models");
 const ApiError = require("../error/ApiError");
 
 class productController {
   async create(req, res, next) {
     try {
-      let { name, info, price, sales, typeId } = req.body;
+      let { info, price, sales, isNew, typeId, modelId, colorId, sizes } =
+        req.body;
 
       const product = await Product.create({
-        name,
+        modelId,
+        isNew,
         info,
         price,
         sales,
         typeId,
+        colorId,
       });
+
+      if (sizes) {
+        // sizes = JSON.parse(sizes);
+        sizes.forEach((i) =>
+          ProductSize.create({
+            sizeId: i.sizeId,
+            productId: product.id,
+          })
+        );
+      }
 
       return res.json(product);
     } catch (e) {
@@ -31,7 +51,7 @@ class productController {
   }
 
   async getAll(req, res) {
-    let { typeId, limit, page } = req.query;
+    let { typeId, colorId, limit, page } = req.query;
     limit = limit || 20;
     page = page || 1;
     let offset = page * limit - limit;
@@ -39,35 +59,39 @@ class productController {
 
     const check = {
       ...(typeId && { typeId }),
+      ...(colorId && { colorId }),
     };
-    console.log(check);
     products = await Product.findAndCountAll({
       where: check,
-      attributes: ["id", "name", "price", "sales"],
+      attributes: ["id", "price", "sales", "isNew"],
       include: [
         {
           model: Color,
           attributes: ["id", "name"],
-          include: [
-            {
-              model: Img,
-              attributes: ["id", "mainView", "secondView"],
-            },
-          ],
-          through: {
-            attributes: [
-              /* атрибуты соединительной таблицы */
-            ],
-          },
+        },
+        {
+          model: Img,
+          attributes: ["id", "isMain", "isSecond", "file"],
         },
         {
           model: Size,
           attributes: ["id", "name"],
           through: {
-            attributes: [
-              /* атрибуты соединительной таблицы */
-            ],
+            attributes: [],
           },
+        },
+        {
+          model: Model,
+          attributes: ["id", "name"],
+          include: [
+            {
+              model: Color,
+              attributes: ["id", "name"],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
         },
       ],
       limit,
@@ -90,18 +114,14 @@ class productController {
           model: Color,
           attributes: ["id", "name"],
           through: {
-            attributes: [
-              /* атрибуты соединительной таблицы */
-            ],
+            attributes: [],
           },
         },
         {
           model: Size,
           attributes: ["id", "name"],
           through: {
-            attributes: [
-              /* атрибуты соединительной таблицы */
-            ],
+            attributes: [],
           },
         },
       ],

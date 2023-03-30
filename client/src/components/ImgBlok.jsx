@@ -21,28 +21,27 @@ const ImgBlok = ({ images }) => {
     <Wrapper>
       <img className="img__main" src={isMain} alt="a" />
       <FlexContainer className="img__blok" direction="column" gap="5">
-        {images.map(
-          (image) =>
-            isActive === image.id ? (
-              <img
-                key={image.id}
-                className="img__item active"
-                src={image.url}
-                alt="img"
-              />
-            ) : (
-              <img
-                key={image.id}
-                className="img__item"
-                src={image.url}
-                alt="img"
-                onClick={() => {
-                  setIsMain(image.url);
-                  setIsActive(image.id);
-                }}
-              />
-            )
-          // <ImgItem className="img__item" name={image.url} />
+        {images.map((image) =>
+          isActive === image.id ? (
+            <img
+              key={image.id}
+              className="img__item active"
+              src={image.url}
+              alt="img"
+            />
+          ) : (
+            <img
+              key={image.id}
+              className="img__item"
+              src={image.url}
+              alt="img"
+              onClick={() => {
+                setIsMain(image.url);
+                setIsActive(image.id);
+              }}
+            />
+            // <ImgItem className="img__item" name={image.url} />
+          )
         )}
       </FlexContainer>
     </Wrapper>
@@ -60,8 +59,12 @@ const Wrapper = styled.div`
   .img__blok {
     width: 40%;
     .img__item {
+      cursor: pointer;
       height: 110px;
       width: 110px;
+      &:hover {
+        background-color: #4096ff19;
+      }
       &.active {
         border: 1px solid #4096ff;
         background-color: #4096ff19;
@@ -71,7 +74,7 @@ const Wrapper = styled.div`
 `;
 
 // const ImgItem = styled.div`
-// height: 120px;
-// width: 120px;
-//   /* background: url(${({ name }) => name}); */
+//   height: 120px;
+//   width: 120px;
+//   background-image: url("${({ name }) => name}");
 // `;
