@@ -33,6 +33,11 @@ const Wrapper = styled.div`
     min-height: 27px;
     min-width: 27px;
     cursor: pointer;
+    border: 1px solid rgba(160, 160, 160, 0.25);
+
+    &:hover {
+      background-color: #4096ff19;
+    }
     &.active {
       color: #fff;
       background-color: #000;
