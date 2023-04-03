@@ -18,7 +18,7 @@ export interface ISize {
 export interface IModel {
   id: number;
   name: string;
-  colors: IColor[];
+  colors?: IColor[];
 }
 export interface IType {
   id: number;
@@ -32,7 +32,7 @@ export interface IProduct {
   isNew: boolean;
   color: IColor;
   imgs: IImg[];
-  sizes: ISize[];
+  sizes?: ISize[];
   model: IModel;
   type?: IType;
   info?: string;

@@ -64,12 +64,12 @@ const Card: React.FC<IProps> = ({
               ))}
       </FlexContainer>
       <FlexContainer className="color__bloc">
-        {colors.map((color?) => (
+        {colors?.map((color?) => (
           <Color key={color.id} className="color__item" color={color.name} />
         ))}
       </FlexContainer>
       <FlexContainer className="size__bloc">
-        {sizes.map((size) => (
+        {sizes?.map((size) => (
           <div key={size.id} className="size__item">
             {size.name}
           </div>

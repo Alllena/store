@@ -3,10 +3,12 @@ import styled from "styled-components";
 import Logo from "../components/base/Logo";
 import NavBar from "../components/NavBar";
 import { FlexContainer } from "../components/styled/FlexContainer";
+import Basket from "../components/Basket";
 
 const MainPage = () => {
   return (
     <PageWrapper>
+      <Basket />
       <div className="row"></div>
       <FlexContainer className="header">
         <Logo></Logo>
@@ -37,7 +39,7 @@ const PageWrapper = styled.div`
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
     z-index: 100;
     background: #fff;
   }

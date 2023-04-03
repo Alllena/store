@@ -47,7 +47,7 @@ const InfoBlok: React.FC<IProps> = ({
           <div className="price">€{price}</div>
         )}
       </FlexContainer>
-      <div className="line"></div>
+      <span className="line"></span>
       <p>Color</p>
       <ColorBlok model={model} />
       <p>Size</p>
@@ -99,6 +99,7 @@ const Wrapper = styled.div`
     }
   }
   .line {
+    display: block;
     width: 100%;
     border-bottom: 1px solid rgba(160, 160, 160, 0.25);
   }

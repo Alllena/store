@@ -56,7 +56,7 @@ const ButtonWrapper = styled.button<ButtonProps>`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: 15px 20px;
+  padding: ${(props) => (props.look === "header" ? "5px" : "15px 20px")};
 
   &:hover {
     background-color: ${(props) =>

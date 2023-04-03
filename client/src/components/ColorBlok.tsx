@@ -15,7 +15,7 @@ const ColorBlok: React.FC<IProps> = ({ model }) => {
 
   return (
     <Wrapper>
-      {model.colors.map((color) => (
+      {model.colors?.map((color) => (
         <Color
           key={color.id}
           className="color__item"
