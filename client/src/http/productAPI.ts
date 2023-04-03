@@ -26,7 +26,7 @@ export const fetchOneProduct =
     try {
       dispatch(oneProductSlice.actions.productOneFetching());
       const response = await $host.get<IProduct>(
-        "api/product" + id
+        "api/product/" + id
         // {params: { colorId, modelId }}
       );
       dispatch(

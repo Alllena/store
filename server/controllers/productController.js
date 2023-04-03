@@ -104,13 +104,14 @@ class productController {
   async getOne(req, res) {
     const { id, colorId, modelId } = req.params;
 
-    const check = {
-      ...(id && { id }),
-      ...(modelId && { modelId }),
-      ...(colorId && { colorId }),
-    };
+    // const check = {
+    //   ...(id && { id }),
+    //   ...(modelId && { modelId }),
+    //   ...(colorId && { colorId }),
+    // };
     const product = await Product.findOne({
-      where: check,
+      where: { id },
+      // where: check,
       attributes: ["id", "price", "sales", "isNew", "info"],
       include: [
         {
@@ -139,9 +140,9 @@ class productController {
             {
               model: Color,
               attributes: ["id", "name"],
-              through: {
-                attributes: [],
-              },
+              // through: {
+              //   attributes: ["productId"],
+              // },
             },
           ],
         },
