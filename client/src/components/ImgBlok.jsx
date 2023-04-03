@@ -1,46 +1,49 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { FlexContainer } from "./styled/FlexContainer";
 
-const ImgBlok = ({ images }) => {
+const ImgBlok = ({ images, model }) => {
   const [isMain, setIsMain] = useState("");
   const [isActive, setIsActive] = useState(Number);
-  useEffect(() => {
-    getMainImage();
-  }, []);
 
   const getMainImage = () => {
-    const mainImage = images.filter((image) => {
-      return image.isMain === true;
-    });
-    setIsMain(mainImage[0].url);
-    setIsActive(mainImage[0].id);
+    const [mainImage] = images.filter((image) => image.isMain === true);
+    setIsMain(mainImage.file);
+    setIsActive(mainImage.id);
   };
+
+  useEffect(() => {
+    images.length > 0 && getMainImage();
+  }, []);
 
   return (
     <Wrapper>
-      <img className="img__main" src={isMain} alt="a" />
+      <img
+        className="img__main"
+        src={"http://localhost:5000/" + isMain}
+        alt="images"
+      />
       <FlexContainer className="img__blok" direction="column" gap="5">
         {images.map((image) =>
           isActive === image.id ? (
             <img
               key={image.id}
               className="img__item active"
-              src={image.url}
-              alt="img"
+              src={"http://localhost:5000/" + image.file}
+              alt="images"
             />
           ) : (
             <img
               key={image.id}
               className="img__item"
-              src={image.url}
-              alt="img"
+              src={"http://localhost:5000/" + image.file}
+              alt="images"
               onClick={() => {
-                setIsMain(image.url);
+                setIsMain(image.file);
                 setIsActive(image.id);
               }}
             />
-            // <ImgItem className="img__item" name={image.url} />
           )
         )}
       </FlexContainer>
@@ -72,9 +75,3 @@ const Wrapper = styled.div`
     }
   }
 `;
-
-// const ImgItem = styled.div`
-//   height: 120px;
-//   width: 120px;
-//   background-image: url("${({ name }) => name}");
-// `;

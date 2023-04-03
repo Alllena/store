@@ -1,53 +1,93 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { FlexContainer } from "./styled/FlexContainer";
 import { ShoppingFilled } from "@ant-design/icons";
 import Button from "./base/Buttons";
+import { IProduct } from "../models/IProducts";
+import { useNavigate } from "react-router-dom";
+import { PRODUCT_ROUTE } from "../utils/consts";
 
-interface Product {
-  name: string;
-  sales: number;
-  img?: string;
-  price: number;
+interface IProps {
+  product: IProduct;
+  onClick: () => void;
 }
 
-interface Props {
-  product: Product;
-  colors: string[];
-  size: number[];
-}
+const Card: React.FC<IProps> = ({
+  product: {
+    id,
+    model,
+    model: { colors },
+    price,
+    sales,
+    isNew,
+    imgs,
+    sizes,
+  },
+  onClick,
+}) => {
+  const [isHover, setIsHover] = useState(false);
 
-const Card: React.FC<Props> = ({ product, colors, size }) => {
+  const handleMouseEnter = () => {
+    setIsHover(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHover(false);
+  };
+
   return (
-    <CardWrapper>
+    <CardWrapper onClick={onClick}>
       <FlexContainer className="img__bloc">
-        {product.sales > 0 && (
-          <FlexContainer className="sales">-{product.sales}%</FlexContainer>
+        {sales > 0 && (
+          <FlexContainer className="sales">-{sales}%</FlexContainer>
         )}
-        <img src={product.img} alt={product.name} />
+        {isHover
+          ? imgs
+              .filter((item) => item.isSecond === true)
+              .map((item) => (
+                <img
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  src={"http://localhost:5000/" + item.file}
+                  alt={model.name}
+                />
+              ))
+          : imgs
+              .filter((item) => item.isMain === true)
+              .map((item) => (
+                <img
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  src={"http://localhost:5000/" + item.file}
+                  alt={model.name}
+                />
+              ))}
       </FlexContainer>
       <FlexContainer className="color__bloc">
-        {colors.map((item) => (
-          <Color className="color__item" color={item} />
+        {colors.map((color?) => (
+          <Color key={color.id} className="color__item" color={color.name} />
         ))}
       </FlexContainer>
       <FlexContainer className="size__bloc">
-        {size.map((size) => (
-          <div className="size__item">{size}</div>
+        {sizes.map((size) => (
+          <div key={size.id} className="size__item">
+            {size.name}
+          </div>
         ))}
       </FlexContainer>
       <FlexContainer className="info__bloc" wrap="nowrap">
         <FlexContainer direction="column" wrap="nowrap" align="start">
-          <div className="product__name">{product.name}</div>
+          <div className="product__name">{model.name}</div>
           <FlexContainer className="product__prase" justify="start">
-            {product.sales > 0 ? (
+            {sales > 0 ? (
               <FlexContainer justify="start">
                 <div className="price price-discount">
-                  €{product.price - (product.sales / 100) * product.price}
+                  €{price - (sales / 100) * price}
                 </div>
-                <div className="price price-before">€{product.price}</div>
+                <div className="price price-before">€{price}</div>
               </FlexContainer>
             ) : (
-              <div className="price">€{product.price}</div>
+              <div className="price">€{price}</div>
             )}
           </FlexContainer>
         </FlexContainer>
