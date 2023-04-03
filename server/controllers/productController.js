@@ -100,22 +100,30 @@ class productController {
 
     return res.json(products);
   }
+
   async getOne(req, res) {
-    const { id } = req.params;
+    const { id, colorId, modelId } = req.params;
+
+    const check = {
+      ...(id && { id }),
+      ...(modelId && { modelId }),
+      ...(colorId && { colorId }),
+    };
     const product = await Product.findOne({
-      where: { id },
-      attributes: ["id", "name", "price", "sales", "info"],
+      where: check,
+      attributes: ["id", "price", "sales", "isNew", "info"],
       include: [
+        {
+          model: Color,
+          attributes: ["id", "name"],
+        },
         {
           model: Type,
           attributes: ["id", "name"],
         },
         {
-          model: Color,
-          attributes: ["id", "name"],
-          through: {
-            attributes: [],
-          },
+          model: Img,
+          attributes: ["id", "isMain", "isSecond", "file"],
         },
         {
           model: Size,
@@ -123,6 +131,19 @@ class productController {
           through: {
             attributes: [],
           },
+        },
+        {
+          model: Model,
+          attributes: ["id", "name"],
+          include: [
+            {
+              model: Color,
+              attributes: ["id", "name"],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
         },
       ],
     });
