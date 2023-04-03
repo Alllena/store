@@ -48,7 +48,9 @@ export const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: PRODUCT_ROUTE + "/:id",
+        path: PRODUCT_ROUTE,
+        // path: PRODUCT_ROUTE + "/:id",
+        path: PRODUCT_ROUTE + "/:colorId/:modelId",
         element: <ProductPage />,
       },
     ],

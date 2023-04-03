@@ -24,12 +24,11 @@ const ShopPage = () => {
     <PageWrapper>
       {products.map((item) => (
         <Card
-          //   onClick={() => {
-          //     navigate(PRODUCT_ROUTE);
-          //     dispatch(oneProductSlice.actions.setSelectedColor(item.color.id));
-          //     dispatch(oneProductSlice.actions.setSelectedModel(item.model.id));
-          //   }}
-          onClick={() => navigate(PRODUCT_ROUTE + "/" + item.id)}
+          onClick={() => {
+            navigate(PRODUCT_ROUTE + `/${item.color.id}/${item.model.id}`);
+            dispatch(oneProductSlice.actions.setSelectedColor(item.color.id));
+            dispatch(oneProductSlice.actions.setSelectedModel(item.model.id));
+          }}
           key={item.id}
           product={item}
         ></Card>

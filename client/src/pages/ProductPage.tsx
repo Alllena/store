@@ -13,14 +13,14 @@ const ProductPage = () => {
     (state) => state.oneProductReducer
   );
 
-  const { id } = useParams();
+  const { colorId, modelId } = useParams();
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchOneProduct(+id));
+    if (colorId && modelId) {
+      dispatch(fetchOneProduct(+colorId, +modelId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [colorId, modelId, dispatch]);
 
   console.log(product);
   return (

@@ -12,7 +12,7 @@ interface IProductsResponse {
 export const fetchProducts = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(productSlice.actions.productsFetching());
-    const response = await $host.get<IProductsResponse>("api/product");
+    const response = await $host.get<IProductsResponse>("api/shop");
     dispatch(productSlice.actions.productsFetchingSuccess(response.data.rows));
   } catch (e) {
     if (e instanceof SyntaxError) {
@@ -21,13 +21,11 @@ export const fetchProducts = () => async (dispatch: AppDispatch) => {
   }
 };
 export const fetchOneProduct =
-  (id?: number, colorId?: number, modelId?: number) =>
-  async (dispatch: AppDispatch) => {
+  (colorId?: number, modelId?: number) => async (dispatch: AppDispatch) => {
     try {
       dispatch(oneProductSlice.actions.productOneFetching());
       const response = await $host.get<IProduct>(
-        "api/product/" + id
-        // {params: { colorId, modelId }}
+        `api/product/${colorId}/${modelId}`
       );
       dispatch(
         oneProductSlice.actions.productOneFetchingSuccess(response.data)

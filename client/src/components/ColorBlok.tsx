@@ -2,13 +2,16 @@ import styled from "styled-components";
 import { useAppDispatch } from "../hooks/redux";
 import { IColor, IModel } from "../models/IProducts";
 import { oneProductSlice } from "../store/oneProductSlice";
+import { PRODUCT_ROUTE } from "../utils/consts";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   model: IModel;
 }
 
 const ColorBlok: React.FC<IProps> = ({ model }) => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   return (
     <Wrapper>
@@ -18,8 +21,9 @@ const ColorBlok: React.FC<IProps> = ({ model }) => {
           className="color__item"
           color={color.name}
           onClick={() => {
-            // dispatch(oneProductSlice.actions.setSelectedColor(color.id));
-            // dispatch(oneProductSlice.actions.setSelectedModel(model.id));
+            navigate(PRODUCT_ROUTE + `/${color.id}/${model.id}`);
+            dispatch(oneProductSlice.actions.setSelectedColor(color.id));
+            dispatch(oneProductSlice.actions.setSelectedModel(model.id));
           }}
         />
       ))}
@@ -35,6 +39,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 const Color = styled.div`
+  cursor: pointer;
   min-height: 27px;
   min-width: 27px;
   border-radius: 50%;
