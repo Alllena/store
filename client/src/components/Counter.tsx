@@ -13,7 +13,7 @@ const Counter = () => {
       <Button onClick={() => {}} look={ButtonLook.main}>
         <MinusOutlined />
       </Button>
-      <FlexContainer className="count__prase" justify="start">
+      <FlexContainer className="count__cash" justify="start">
         €<span></span>
       </FlexContainer>
     </CounterWrapper>
@@ -33,7 +33,7 @@ const CounterWrapper = styled.div`
     height: 50px;
     border-bottom: 1px solid rgba(160, 160, 160, 0.25);
   }
-  .count__prase {
+  .count__cash {
     width: 100px;
   }
   button {

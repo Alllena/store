@@ -2,18 +2,8 @@ import styled from "styled-components";
 import { FlexContainer } from "./styled/FlexContainer";
 import Button, { ButtonLook } from "./base/Buttons";
 import { CloseSquareOutlined, DeleteOutlined } from "@ant-design/icons";
-import { IProduct } from "../models/IProducts";
-import Counter from "./Couter";
-
-interface IBasketProduct {
-  id: number;
-  count: number;
-  product: IProduct;
-  size: {
-    id: number;
-    name: number;
-  };
-}
+import Counter from "./Counter";
+import { IBasketProduct } from "../models/IUsers";
 
 const Basket = () => {
   const basket: IBasketProduct = {
