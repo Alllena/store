@@ -16,10 +16,15 @@ const ShopPage = () => {
   const { products, isLoading, error } = useAppSelector(
     (state) => state.productReducer
   );
+  const { typeId } = useAppSelector((state) => state.filterReducer);
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+    typeId
+      ? dispatch(fetchProducts(String(typeId)))
+      : dispatch(fetchProducts());
+  }, [typeId]);
+
+  console.log(products);
 
   return (
     <OutletWrapper>

@@ -4,6 +4,7 @@ import { oneProductReducer } from "./oneProductSlice";
 import { basketReducer } from "./basketSlice";
 import { userReducer } from "./userSlice";
 import { typesReducer } from "./typeSlice";
+import { filterReducer } from "./filterSlice";
 
 const rootReducer = combineReducers({
   productReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   basketReducer,
   userReducer,
   typesReducer,
+  filterReducer,
 });
 
 export const setupStore = () => {

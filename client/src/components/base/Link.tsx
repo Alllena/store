@@ -11,9 +11,10 @@ interface LinkProps {
   to: string;
   children?: ReactElement | React.ReactNode;
   look?: LinkLook;
+  onClick?: () => void;
 }
 
-const Link: FC<LinkProps> = ({ to, children, look }) => {
+const Link: FC<LinkProps> = ({ to, children, look, onClick }) => {
   return (
     <LinkWrapper look={look} to="">
       <NavLink
@@ -21,6 +22,7 @@ const Link: FC<LinkProps> = ({ to, children, look }) => {
         className={({ isActive, isPending }) =>
           isPending ? "pending" : isActive ? "active" : ""
         }
+        onClick={onClick}
       >
         {children}
       </NavLink>

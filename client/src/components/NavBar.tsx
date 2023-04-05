@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { userSlice } from "../store/userSlice";
 import { fetchTypes } from "../http/productAPI";
 import { useEffect } from "react";
+import { filterSlice } from "../store/filterSlice";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -26,8 +27,6 @@ const NavBar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(types);
-
   return (
     <Wrapper>
       <FlexContainer className="navbar__type" justify="start" align="center">
@@ -35,7 +34,13 @@ const NavBar = () => {
           New in
         </Link>
         {types.map((item) => (
-          <Link key={item.id} to={SHOP_ROUTE}>
+          <Link
+            key={item.id}
+            to={SHOP_ROUTE + `?typeId=${item.id}`}
+            onClick={() => {
+              dispatch(filterSlice.actions.addTypeId(item.id));
+            }}
+          >
             {item.name}
           </Link>
         ))}

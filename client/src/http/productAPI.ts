@@ -9,19 +9,26 @@ import { typesSlice } from "../store/typeSlice";
 interface IProductsResponse {
   count: number;
   rows: IProduct[];
+  typeId?: string;
 }
 
-export const fetchProducts = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(productSlice.actions.productsFetching());
-    const response = await $host.get<IProductsResponse>("api/shop");
-    dispatch(productSlice.actions.productsFetchingSuccess(response.data.rows));
-  } catch (e) {
-    if (e instanceof SyntaxError) {
-      dispatch(productSlice.actions.productsFetchingError(e.message));
+export const fetchProducts =
+  (typeId?: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(productSlice.actions.productsFetching());
+      const response = await $host.get<IProductsResponse>(
+        typeId ? `api/shop?typeId=${typeId}` : "api/shop"
+      );
+      console.log(typeId);
+      dispatch(
+        productSlice.actions.productsFetchingSuccess(response.data.rows)
+      );
+    } catch (e) {
+      if (e instanceof SyntaxError) {
+        dispatch(productSlice.actions.productsFetchingError(e.message));
+      }
     }
-  }
-};
+  };
 export const fetchOneProduct =
   (colorId?: number, modelId?: number) => async (dispatch: AppDispatch) => {
     try {
