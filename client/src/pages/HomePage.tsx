@@ -22,16 +22,11 @@ const HomePage = () => {
 export default HomePage;
 
 const PageWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
-  /* min-height: 100vh; */
-  /* padding: 0; */
   background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
     url("/img/Banner.png");
 `;
