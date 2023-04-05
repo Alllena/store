@@ -8,16 +8,13 @@ import Basket from "../components/Basket";
 const MainPage = () => {
   return (
     <PageWrapper>
-      <Basket />
+      {/* <Basket /> */}
       <div className="row"></div>
       <FlexContainer className="header">
         <Logo></Logo>
         <NavBar></NavBar>
       </FlexContainer>
-
-      <FlexContainer className="wrapper__outlet">
-        <Outlet />
-      </FlexContainer>
+      <Outlet />
     </PageWrapper>
   );
 };
@@ -27,7 +24,7 @@ const PageWrapper = styled.div`
   display: grid;
   grid-template-rows: 40px 100px 1fr;
   min-height: 100vh;
-  background: #fff;
+  padding: 0;
   .row {
     height: 40px;
     width: 100%;
@@ -42,10 +39,5 @@ const PageWrapper = styled.div`
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
     z-index: 100;
     background: #fff;
-  }
-  .wrapper__outlet {
-    margin: 0 auto;
-    width: 90vw;
-    padding: 0 5px;
   }
 `;

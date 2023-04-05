@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { fetchProducts } from "../http/productAPI";
 import { oneProductSlice } from "../store/oneProductSlice";
 import { PRODUCT_ROUTE } from "../utils/consts";
+import { OutletWrapper } from "../components/styled/OutletWrapper";
 
 const ShopPage = () => {
   const navigate = useNavigate();
@@ -21,23 +22,26 @@ const ShopPage = () => {
   }, []);
 
   return (
-    <PageWrapper>
-      {products.map((item) => (
-        <Card
-          onClick={() => {
-            navigate(PRODUCT_ROUTE + `/${item.color.id}/${item.model.id}`);
-            dispatch(oneProductSlice.actions.setSelectedColor(item.color.id));
-            dispatch(oneProductSlice.actions.setSelectedModel(item.model.id));
-          }}
-          key={item.id}
-          product={item}
-        ></Card>
-      ))}
-    </PageWrapper>
+    <OutletWrapper>
+      <PageWrapper>
+        {products.map((item) => (
+          <Card
+            onClick={() => {
+              navigate(PRODUCT_ROUTE + `/${item.color.id}/${item.model.id}`);
+              dispatch(oneProductSlice.actions.setSelectedColor(item.color.id));
+              dispatch(oneProductSlice.actions.setSelectedModel(item.model.id));
+            }}
+            key={item.id}
+            product={item}
+          ></Card>
+        ))}
+      </PageWrapper>
+    </OutletWrapper>
   );
 };
 export default ShopPage;
 const PageWrapper = styled.div`
+  width: 90vw;
   padding: 20px 20px;
   display: flex;
   flex-wrap: wrap;

@@ -8,7 +8,6 @@ import LoginPage from "./pages/LoginPage";
 import ProductPage from "./pages/ProductPage.tsx";
 import {
   MAIN_ROUTE,
-  HOME_ROUTE,
   ADMIN_ROUTE,
   LOGIN_ROUTE,
   REGISTRATION_ROUTE,
@@ -21,10 +20,9 @@ export const router = createBrowserRouter([
   {
     path: MAIN_ROUTE,
     element: <MainPage />,
-    // errorElement: <ErrorPage />,
     children: [
       {
-        path: HOME_ROUTE,
+        index: true,
         element: <HomePage />,
       },
       {
@@ -48,8 +46,6 @@ export const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: PRODUCT_ROUTE,
-        // path: PRODUCT_ROUTE + "/:id",
         path: PRODUCT_ROUTE + "/:colorId/:modelId",
         element: <ProductPage />,
       },

@@ -34,7 +34,7 @@ const ButtonWrapper = styled.button<ButtonProps>`
     props.look === "main"
       ? "transparent"
       : props.look === "extra"
-      ? "transparent"
+      ? "#fff"
       : props.look === "header"
       ? "transparent"
       : "#000"};
@@ -44,7 +44,7 @@ const ButtonWrapper = styled.button<ButtonProps>`
       : props.look === "header"
       ? "#000"
       : props.look === "extra"
-      ? "#4096ff"
+      ? "#000"
       : "#fff"};
   font-family: "Circular", sans-serif;
   font-weight: 700;
@@ -56,7 +56,14 @@ const ButtonWrapper = styled.button<ButtonProps>`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: ${(props) => (props.look === "header" ? "5px" : "15px 20px")};
+  padding: ${(props) =>
+    props.look === "header"
+      ? "5px"
+      : props.look === "extra"
+      ? "15px 40px"
+      : "15px 20px"};
+  border-radius: ${(props) => (props.look === "extra" ? "25px" : "none")};
+  text-transform: ${(props) => (props.look === "extra" ? "uppercase" : "none")};
 
   &:hover {
     background-color: ${(props) =>

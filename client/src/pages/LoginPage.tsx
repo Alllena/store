@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from "styled-components";
 import { FlexContainer } from "../components/styled/FlexContainer";
+import { OutletWrapper } from "../components/styled/OutletWrapper";
 import { Input } from "antd";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -35,81 +36,87 @@ const LoginPage = () => {
   };
 
   return (
-    <PageWrapper>
-      {isLogin ? <h1>Log in to your account</h1> : <h1>Create an account</h1>}
-      <FlexContainer className="input__block" direction="column" gap="50px">
-        <FlexContainer>
-          <label id="email">Email</label>
-          {error ? (
-            <Input
-              className="login__input"
-              status="error"
-              placeholder="Error"
-              value={email}
-              onClick={() => {
-                dispatch(userSlice.actions.userFetchingError(""));
-                setEmail("");
-                setPassword("");
-              }}
-            />
-          ) : (
-            <Input
-              placeholder="email"
-              className="login__input"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          )}
+    <OutletWrapper>
+      <PageWrapper>
+        {isLogin ? <h1>Log in to your account</h1> : <h1>Create an account</h1>}
+        <FlexContainer className="input__block" direction="column" gap="50px">
+          <FlexContainer>
+            <label id="email">Email</label>
+            {error ? (
+              <Input
+                className="login__input"
+                status="error"
+                placeholder="Error"
+                value={email}
+                onClick={() => {
+                  dispatch(userSlice.actions.userFetchingError(""));
+                  setEmail("");
+                  setPassword("");
+                }}
+              />
+            ) : (
+              <Input
+                placeholder="email"
+                className="login__input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            )}
+          </FlexContainer>
+          <FlexContainer>
+            <label id="password">Password</label>
+            {error ? (
+              <Input
+                className="login__input"
+                status="error"
+                placeholder="Error"
+                value={password}
+                onClick={() => {
+                  dispatch(userSlice.actions.userFetchingError(""));
+                  setPassword("");
+                  setEmail("");
+                }}
+              />
+            ) : (
+              <Input.Password
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="input password"
+                visibilityToggle={{
+                  visible: passwordVisible,
+                  onVisibleChange: setPasswordVisible,
+                }}
+              />
+            )}
+          </FlexContainer>
+          <p className="error__info">{error as string}</p>
+          <Button onClick={click}>{isLogin ? "Sign in" : "Save"}</Button>
+          <div className="question">
+            {isLogin ? (
+              <div
+                onClick={() => dispatch(userSlice.actions.userIsLogin(false))}
+              >
+                No account?
+                <Link className="link" to={REGISTRATION_ROUTE}>
+                  {" "}
+                  Create one here{" "}
+                </Link>
+              </div>
+            ) : (
+              <div
+                onClick={() => dispatch(userSlice.actions.userIsLogin(true))}
+              >
+                Already have an account??
+                <Link className="link" to={LOGIN_ROUTE}>
+                  {" "}
+                  Log in instead!
+                </Link>
+              </div>
+            )}
+          </div>
         </FlexContainer>
-        <FlexContainer>
-          <label id="password">Password</label>
-          {error ? (
-            <Input
-              className="login__input"
-              status="error"
-              placeholder="Error"
-              value={password}
-              onClick={() => {
-                dispatch(userSlice.actions.userFetchingError(""));
-                setPassword("");
-                setEmail("");
-              }}
-            />
-          ) : (
-            <Input.Password
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="input password"
-              visibilityToggle={{
-                visible: passwordVisible,
-                onVisibleChange: setPasswordVisible,
-              }}
-            />
-          )}
-        </FlexContainer>
-        <p className="error__info">{error as string}</p>
-        <Button onClick={click}>{isLogin ? "Sign in" : "Save"}</Button>
-        <div className="question">
-          {isLogin ? (
-            <div onClick={() => dispatch(userSlice.actions.userIsLogin(false))}>
-              No account?
-              <Link className="link" to={REGISTRATION_ROUTE}>
-                {" "}
-                Create one here{" "}
-              </Link>
-            </div>
-          ) : (
-            <div onClick={() => dispatch(userSlice.actions.userIsLogin(true))}>
-              Already have an account??
-              <Link className="link" to={LOGIN_ROUTE}>
-                {" "}
-                Log in instead!
-              </Link>
-            </div>
-          )}
-        </div>
-      </FlexContainer>
-    </PageWrapper>
+      </PageWrapper>
+    </OutletWrapper>
   );
 };
 export default LoginPage;
