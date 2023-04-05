@@ -8,7 +8,9 @@ class TypeController {
     return res.json(type);
   }
   async getAll(reg, res) {
-    const types = await Type.findAll();
+    const types = await Type.findAll({
+      attributes: ["id", "name"],
+    });
     return res.json(types);
   }
 }

@@ -3,12 +3,14 @@ import { productReducer } from "./productsSlice";
 import { oneProductReducer } from "./oneProductSlice";
 import { basketReducer } from "./basketSlice";
 import { userReducer } from "./userSlice";
+import { typesReducer } from "./typeSlice";
 
 const rootReducer = combineReducers({
   productReducer,
   oneProductReducer,
   basketReducer,
   userReducer,
+  typesReducer,
 });
 
 export const setupStore = () => {

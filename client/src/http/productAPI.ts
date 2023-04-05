@@ -1,8 +1,10 @@
-import { IProduct } from "../models/IProducts";
+import { AxiosError } from "axios";
+import { IProduct, IType } from "../models/IProducts";
 import { oneProductSlice } from "../store/oneProductSlice";
 import { productSlice } from "../store/productsSlice";
 import { AppDispatch } from "../store/store";
 import { $authHost, $host } from "./index";
+import { typesSlice } from "../store/typeSlice";
 
 interface IProductsResponse {
   count: number;
@@ -31,8 +33,12 @@ export const fetchOneProduct =
         oneProductSlice.actions.productOneFetchingSuccess(response.data)
       );
     } catch (e) {
-      if (e instanceof SyntaxError) {
-        dispatch(oneProductSlice.actions.productOneFetchingError(e.message));
+      if (e instanceof AxiosError) {
+        dispatch(
+          oneProductSlice.actions.productOneFetchingError(
+            e.response?.data.message
+          )
+        );
       }
     }
   };
@@ -41,10 +47,18 @@ export const fetchOneProduct =
 //   const { data } = await $authHost.post("api/type", type);
 //   return data;
 // };
-// export const fetchTypes = async () => {
-//   const { data } = await $host.get("api/type");
-//   return data;
-// };
+
+export const fetchTypes = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(typesSlice.actions.typesFetching());
+    const response = await $host.get<IType[]>("api/type");
+    dispatch(typesSlice.actions.typesFetchingSuccess(response.data));
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      dispatch(typesSlice.actions.typesFetchingError(e.response?.data.message));
+    }
+  }
+};
 
 // export const createBrands = async (brand) => {
 //   const { data } = await $authHost.post("api/brand", brand);

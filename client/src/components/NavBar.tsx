@@ -12,17 +12,21 @@ import { FlexContainer } from "./styled/FlexContainer";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { userSlice } from "../store/userSlice";
+import { fetchTypes } from "../http/productAPI";
+import { useEffect } from "react";
 
-const type = [
-  { id: 1, name: "Slippers" },
-  { id: 2, name: "Sandals" },
-  { id: 3, name: "Shoes" },
-];
 const NavBar = () => {
   const navigate = useNavigate();
-
   const dispatch = useAppDispatch();
   const { isSuccess, user } = useAppSelector((state) => state.userReducer);
+  const { types } = useAppSelector((state) => state.typesReducer);
+
+  useEffect(() => {
+    dispatch(fetchTypes());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log(types);
 
   return (
     <Wrapper>
@@ -30,7 +34,7 @@ const NavBar = () => {
         <Link to={SHOP_ROUTE} look={LinkLook.important}>
           New in
         </Link>
-        {type.map((item) => (
+        {types.map((item) => (
           <Link key={item.id} to={SHOP_ROUTE}>
             {item.name}
           </Link>
