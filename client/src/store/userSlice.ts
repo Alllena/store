@@ -5,14 +5,16 @@ interface IUserState {
   user: IUser;
   isLogin: boolean;
   isLoading: boolean;
-  error: unknown;
+  error: unknown | string;
+  isSuccess: boolean;
 }
 
 const initialState: IUserState = {
   isLogin: false,
-  user: { id: 0, email: "", role: "" },
   isLoading: false,
+  user: { id: 0, email: "", role: "" },
   error: "",
+  isSuccess: false,
 };
 
 export const userSlice = createSlice({
@@ -24,29 +26,28 @@ export const userSlice = createSlice({
     },
     userRegistrationSuccess(state, action: PayloadAction<IUser>) {
       state.isLoading = false;
+      state.isLogin = true;
       state.error = "";
       state.user = action.payload;
-      state.isLogin = true;
-      console.log(state.user, state.isLogin);
-      console.log(action.payload);
+      state.isSuccess = true;
     },
     userLoginSuccess(state, action: PayloadAction<IUser>) {
       state.isLoading = false;
+      state.isLogin = true;
       state.error = "";
       state.user = action.payload;
-      console.log(state.user);
-      console.log(action.payload);
+      state.isSuccess = true;
     },
     userFetchingError(state, action: PayloadAction<unknown>) {
       state.isLoading = false;
+      state.isLogin = false;
       state.error = action.payload;
-      console.log(state.error, state.isLogin);
-      console.log(action.payload);
     },
     userIsLogin(state, action: PayloadAction<boolean>) {
       state.isLogin = action.payload;
-      console.log(state.isLogin);
-      console.log(action.payload);
+    },
+    userIsSuccess(state) {
+      state.isSuccess = false;
     },
   },
 });

@@ -1,8 +1,8 @@
 import { AppDispatch } from "../store/store";
 import { $authHost, $host } from "./index";
 import { userSlice } from "../store/userSlice";
-
 import jwt_decode from "jwt-decode";
+import { AxiosError } from "axios";
 
 export const registration =
   (email: string, password: string) => async (dispatch: AppDispatch) => {
@@ -14,16 +14,14 @@ export const registration =
         role: "user",
       });
       localStorage.setItem("token", response.data.token);
-      console.log(response.data.token);
       dispatch(
         userSlice.actions.userRegistrationSuccess(
           jwt_decode(response.data.token)
         )
       );
     } catch (e) {
-      if (e instanceof SyntaxError) {
-        dispatch(userSlice.actions.userFetchingError(e.message));
-      }
+      if (e instanceof AxiosError)
+        dispatch(userSlice.actions.userFetchingError(e.response?.data.message));
     }
   };
 export const login =
@@ -39,9 +37,8 @@ export const login =
         userSlice.actions.userLoginSuccess(jwt_decode(response.data.token))
       );
     } catch (e) {
-      if (e instanceof SyntaxError) {
-        dispatch(userSlice.actions.userFetchingError(e.message));
-      }
+      if (e instanceof AxiosError)
+        dispatch(userSlice.actions.userFetchingError(e.response?.data.message));
     }
   };
 

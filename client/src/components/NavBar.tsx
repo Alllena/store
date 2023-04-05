@@ -1,25 +1,29 @@
-import { ShoppingFilled, UserOutlined } from "@ant-design/icons";
+import {
+  ControlOutlined,
+  ShoppingFilled,
+  UserAddOutlined,
+  UserDeleteOutlined,
+} from "@ant-design/icons";
 import Link from "./base/Link";
 import styled from "styled-components";
-import { SHOP_ROUTE } from "../utils/consts";
+import { ADMIN_ROUTE, SHOP_ROUTE, LOGIN_ROUTE } from "../utils/consts";
 import Button, { ButtonLook } from "./base/Buttons";
 import { FlexContainer } from "./styled/FlexContainer";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { userSlice } from "../store/userSlice";
 
+const type = [
+  { id: 1, name: "Slippers" },
+  { id: 2, name: "Sandals" },
+  { id: 3, name: "Shoes" },
+];
 const NavBar = () => {
-  const type = [
-    {
-      id: 1,
-      name: "Slippers",
-    },
-    {
-      id: 2,
-      name: "Sandals",
-    },
-    {
-      id: 3,
-      name: "Shoes",
-    },
-  ];
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+  const { isSuccess, user } = useAppSelector((state) => state.userReducer);
+
   return (
     <Wrapper>
       <FlexContainer className="navbar__type" justify="start" align="center">
@@ -32,9 +36,37 @@ const NavBar = () => {
         <Link to={SHOP_ROUTE}>Special Prices</Link>
       </FlexContainer>
       <FlexContainer className="navbar__user" justify="end" gap="10">
-        <Button onClick={() => {}} look={ButtonLook.header}>
-          <UserOutlined />
-        </Button>
+        {isSuccess ? (
+          <FlexContainer>
+            {user.role === "admin" && (
+              <Button
+                onClick={() => {
+                  navigate(ADMIN_ROUTE);
+                }}
+                look={ButtonLook.header}
+              >
+                {<ControlOutlined />}
+              </Button>
+            )}
+            <Button
+              onClick={() => {
+                dispatch(userSlice.actions.userIsSuccess());
+              }}
+              look={ButtonLook.header}
+            >
+              {<UserDeleteOutlined />}
+            </Button>
+          </FlexContainer>
+        ) : (
+          <Button
+            onClick={() => {
+              navigate(LOGIN_ROUTE);
+            }}
+            look={ButtonLook.header}
+          >
+            {<UserAddOutlined />}
+          </Button>
+        )}
         <Button onClick={() => {}} look={ButtonLook.header}>
           <ShoppingFilled />
         </Button>

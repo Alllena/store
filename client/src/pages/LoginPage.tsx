@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled from "styled-components";
 import { FlexContainer } from "../components/styled/FlexContainer";
 import { Input } from "antd";
@@ -13,31 +14,23 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-  const { isLogin, user, isLoading } = useAppSelector(
+  const { isLogin, error, isSuccess } = useAppSelector(
     (state) => state.userReducer
   );
 
   useEffect(() => {
-    console.log(isLogin); // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogin]);
+    isSuccess && navigate(SHOP_ROUTE);
+  }, [isSuccess]);
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const click = async () => {
-    try {
-      if (isLogin) {
-        dispatch(login(email, password));
-      } else {
-        dispatch(registration(email, password));
-      }
-      // console.log("state", user);
-      // navigate(SHOP_ROUTE);
-    } catch (e) {
-      if (e instanceof SyntaxError) {
-        dispatch(userSlice.actions.userFetchingError(e.message));
-      }
+    if (isLogin) {
+      dispatch(login(email, password));
+    } else {
+      dispatch(registration(email, password));
     }
   };
 
@@ -47,26 +40,54 @@ const LoginPage = () => {
       <FlexContainer className="input__block" direction="column" gap="50px">
         <FlexContainer>
           <label id="email">Email</label>
-          <Input
-            placeholder="email"
-            className="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          {error ? (
+            <Input
+              className="login__input"
+              status="error"
+              placeholder="Error"
+              value={email}
+              onClick={() => {
+                dispatch(userSlice.actions.userFetchingError(""));
+                setEmail("");
+                setPassword("");
+              }}
+            />
+          ) : (
+            <Input
+              placeholder="email"
+              className="login__input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          )}
         </FlexContainer>
         <FlexContainer>
           <label id="password">Password</label>
-          <Input.Password
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="input password"
-            visibilityToggle={{
-              visible: passwordVisible,
-              onVisibleChange: setPasswordVisible,
-            }}
-          />
+          {error ? (
+            <Input
+              className="login__input"
+              status="error"
+              placeholder="Error"
+              value={password}
+              onClick={() => {
+                dispatch(userSlice.actions.userFetchingError(""));
+                setPassword("");
+                setEmail("");
+              }}
+            />
+          ) : (
+            <Input.Password
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="input password"
+              visibilityToggle={{
+                visible: passwordVisible,
+                onVisibleChange: setPasswordVisible,
+              }}
+            />
+          )}
         </FlexContainer>
-        {/* <Input status="error" placeholder="Error" /> */}
+        <p className="error__info">{error as string}</p>
         <Button onClick={click}>{isLogin ? "Sign in" : "Save"}</Button>
         <div className="question">
           {isLogin ? (
@@ -117,10 +138,18 @@ const PageWrapper = styled.div`
     }
     input {
       font-size: 22px;
-      &.email {
+      &.login__input {
         flex: 8.5;
       }
     }
+  }
+  .error__info {
+    display: block;
+    flex: 8.5;
+    font-size: 16px;
+    color: red;
+    width: 100%;
+    height: 20px;
   }
   .link {
     color: #4096ff;
