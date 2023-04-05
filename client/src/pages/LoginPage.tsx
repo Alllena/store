@@ -1,25 +1,64 @@
 import styled from "styled-components";
 import { FlexContainer } from "../components/styled/FlexContainer";
 import { Input } from "antd";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { REGISTRATION_ROUTE, LOGIN_ROUTE } from "../utils/consts";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { REGISTRATION_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from "../utils/consts";
 import Button from "../components/base/Buttons";
+import { login, registration } from "../http/userAPI";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { userSlice } from "../store/userSlice";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+  const { isLogin, user, isLoading } = useAppSelector(
+    (state) => state.userReducer
+  );
+
+  useEffect(() => {
+    console.log(isLogin); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLogin]);
+
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [noAccount, setNoAccount] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const click = async () => {
+    try {
+      if (isLogin) {
+        dispatch(login(email, password));
+      } else {
+        dispatch(registration(email, password));
+      }
+      // console.log("state", user);
+      // navigate(SHOP_ROUTE);
+    } catch (e) {
+      if (e instanceof SyntaxError) {
+        dispatch(userSlice.actions.userFetchingError(e.message));
+      }
+    }
+  };
+
   return (
     <PageWrapper>
-      {noAccount ? <h1>Log in to your account</h1> : <h1>Create an account</h1>}
+      {isLogin ? <h1>Log in to your account</h1> : <h1>Create an account</h1>}
       <FlexContainer className="input__block" direction="column" gap="50px">
         <FlexContainer>
           <label id="email">Email</label>
-          <Input placeholder="email" className="email" />
+          <Input
+            placeholder="email"
+            className="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </FlexContainer>
         <FlexContainer>
           <label id="password">Password</label>
           <Input.Password
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="input password"
             visibilityToggle={{
               visible: passwordVisible,
@@ -28,10 +67,10 @@ const LoginPage = () => {
           />
         </FlexContainer>
         {/* <Input status="error" placeholder="Error" /> */}
-        <Button onClick={() => {}}>Sign in</Button>
+        <Button onClick={click}>{isLogin ? "Sign in" : "Save"}</Button>
         <div className="question">
-          {noAccount ? (
-            <div onClick={() => setNoAccount(false)}>
+          {isLogin ? (
+            <div onClick={() => dispatch(userSlice.actions.userIsLogin(false))}>
               No account?
               <Link className="link" to={REGISTRATION_ROUTE}>
                 {" "}
@@ -39,7 +78,7 @@ const LoginPage = () => {
               </Link>
             </div>
           ) : (
-            <div onClick={() => setNoAccount(true)}>
+            <div onClick={() => dispatch(userSlice.actions.userIsLogin(true))}>
               Already have an account??
               <Link className="link" to={LOGIN_ROUTE}>
                 {" "}
@@ -63,6 +102,9 @@ const PageWrapper = styled.div`
   height: 100%;
   flex-direction: column;
   padding: 50px 30px;
+  div {
+    width: 100%;
+  }
   .input__block {
     padding: 50px 30px;
     border: 1px solid #4096ff;

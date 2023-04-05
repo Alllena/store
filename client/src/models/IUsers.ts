@@ -9,3 +9,9 @@ export interface IBasketProduct {
     name: number;
   };
 }
+
+export interface IUser {
+  id: number;
+  email: string;
+  role: string;
+}
