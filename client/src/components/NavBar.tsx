@@ -4,7 +4,7 @@ import {
   UserAddOutlined,
   UserDeleteOutlined,
 } from "@ant-design/icons";
-import Link from "./base/Link";
+import Link, { LinkLook } from "./base/Link";
 import styled from "styled-components";
 import { ADMIN_ROUTE, SHOP_ROUTE, LOGIN_ROUTE } from "../utils/consts";
 import Button, { ButtonLook } from "./base/Buttons";
@@ -27,13 +27,17 @@ const NavBar = () => {
   return (
     <Wrapper>
       <FlexContainer className="navbar__type" justify="start" align="center">
-        <Link to={SHOP_ROUTE}>New in</Link>
+        <Link to={SHOP_ROUTE} look={LinkLook.important}>
+          New in
+        </Link>
         {type.map((item) => (
           <Link key={item.id} to={SHOP_ROUTE}>
             {item.name}
           </Link>
         ))}
-        <Link to={SHOP_ROUTE}>Special Prices</Link>
+        <Link to={SHOP_ROUTE} look={LinkLook.warning}>
+          Special Prices
+        </Link>
       </FlexContainer>
       <FlexContainer className="navbar__user" justify="end" gap="10">
         {isSuccess ? (
