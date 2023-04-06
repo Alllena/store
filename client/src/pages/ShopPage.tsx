@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -9,22 +10,22 @@ import { oneProductSlice } from "../store/oneProductSlice";
 import { PRODUCT_ROUTE } from "../utils/consts";
 import { OutletWrapper } from "../components/styled/OutletWrapper";
 
+import { useLocation } from "react-router-dom";
+import { getQueryParams } from "../utils/helpers";
+
 const ShopPage = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const { products, isLoading, error } = useAppSelector(
     (state) => state.productReducer
   );
-  const { typeId } = useAppSelector((state) => state.filterReducer);
 
   useEffect(() => {
-    typeId
-      ? dispatch(fetchProducts(String(typeId)))
-      : dispatch(fetchProducts());
-  }, [typeId]);
-
-  console.log(products);
+    const queryParams = getQueryParams(location);
+    dispatch(fetchProducts(queryParams));
+    console.log(location);
+  }, [location]);
 
   return (
     <OutletWrapper>

@@ -4,12 +4,14 @@ interface IFilterState {
   typeId: string;
   colorId: string;
   sizeId: number;
+  isNew: boolean;
 }
 
 const initialState: IFilterState = {
   typeId: "",
   colorId: "",
   sizeId: 0,
+  isNew: false,
 };
 
 export const filterSlice = createSlice({
@@ -18,6 +20,9 @@ export const filterSlice = createSlice({
   reducers: {
     addTypeId(state, action: PayloadAction<number>) {
       state.typeId = String(action.payload);
+      state.isNew = false;
+      console.log(state.typeId);
+      console.log(state.isNew);
     },
     removeTypeId(state) {
       state.typeId = "";
@@ -33,6 +38,13 @@ export const filterSlice = createSlice({
     },
     removeSizeId(state) {
       state.sizeId = 0;
+    },
+    addNew(state) {
+      state.isNew = true;
+      state.typeId = "";
+    },
+    removeNew(state) {
+      state.isNew = false;
     },
   },
 });

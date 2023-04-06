@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+import queryString from "query-string";
 import { IProduct, IType } from "../models/IProducts";
 import { oneProductSlice } from "../store/oneProductSlice";
 import { productSlice } from "../store/productsSlice";
@@ -9,17 +10,20 @@ import { typesSlice } from "../store/typeSlice";
 interface IProductsResponse {
   count: number;
   rows: IProduct[];
-  typeId?: string;
+}
+
+export interface IQueryParams {
+  idType: string;
 }
 
 export const fetchProducts =
-  (typeId?: string) => async (dispatch: AppDispatch) => {
+  (queryParams: any) => async (dispatch: AppDispatch) => {
     try {
       dispatch(productSlice.actions.productsFetching());
       const response = await $host.get<IProductsResponse>(
-        typeId ? `api/shop?typeId=${typeId}` : "api/shop"
+        `api/shop?${queryString.stringify(queryParams)}`
       );
-      console.log(typeId);
+      console.log(queryParams);
       dispatch(
         productSlice.actions.productsFetchingSuccess(response.data.rows)
       );

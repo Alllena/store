@@ -51,7 +51,7 @@ class productController {
   }
 
   async getAll(req, res) {
-    let { typeId, colorId, limit, page } = req.query;
+    let { typeId, colorId, limit, page, isNew } = req.query;
     limit = limit || 20;
     page = page || 1;
     let offset = page * limit - limit;
@@ -60,6 +60,7 @@ class productController {
     const check = {
       ...(typeId && { typeId }),
       ...(colorId && { colorId }),
+      ...(isNew && { isNew }),
     };
     products = await Product.findAndCountAll({
       where: check,

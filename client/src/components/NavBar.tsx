@@ -30,7 +30,13 @@ const NavBar = () => {
   return (
     <Wrapper>
       <FlexContainer className="navbar__type" justify="start" align="center">
-        <Link to={SHOP_ROUTE} look={LinkLook.important}>
+        <Link
+          to={SHOP_ROUTE + `?isNew=${true}`}
+          look={LinkLook.important}
+          onClick={() => {
+            dispatch(filterSlice.actions.addNew());
+          }}
+        >
           New in
         </Link>
         {types.map((item) => (
