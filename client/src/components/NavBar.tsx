@@ -31,6 +31,14 @@ const NavBar = () => {
     <Wrapper>
       <FlexContainer className="navbar__type" justify="start" align="center">
         <Link
+          to={SHOP_ROUTE}
+          onClick={() => {
+            dispatch(filterSlice.actions.addNew());
+          }}
+        >
+          Show all
+        </Link>
+        <Link
           to={SHOP_ROUTE + `?isNew=${true}`}
           look={LinkLook.important}
           onClick={() => {
@@ -50,7 +58,7 @@ const NavBar = () => {
             {item.name}
           </Link>
         ))}
-        <Link to={SHOP_ROUTE} look={LinkLook.warning}>
+        <Link to={SHOP_ROUTE + `?sales=${0}`} look={LinkLook.warning}>
           Special Prices
         </Link>
       </FlexContainer>
