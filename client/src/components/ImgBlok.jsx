@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FlexContainer } from "./styled/FlexContainer";
+import ZoomedImage from "./ZoomedImage";
 
 const ImgBlok = ({ images, model }) => {
   const [isMain, setIsMain] = useState("");
@@ -19,11 +20,16 @@ const ImgBlok = ({ images, model }) => {
 
   return (
     <Wrapper>
-      <img
-        className="img__main"
+      <FlexContainer className="img__main">
+        <ZoomedImage
+          src={"http://localhost:5000/" + isMain}
+          alt="Example Image"
+        />
+      </FlexContainer>
+      {/* <img
         src={"http://localhost:5000/" + isMain}
         alt="images"
-      />
+      /> */}
       <FlexContainer className="img__blok" direction="column" gap="5">
         {images.map((image) =>
           isActive === image.id ? (
@@ -31,14 +37,14 @@ const ImgBlok = ({ images, model }) => {
               key={image.id}
               className="img__item active"
               src={"http://localhost:5000/" + image.file}
-              alt="images"
+              alt="Example images"
             />
           ) : (
             <img
               key={image.id}
               className="img__item"
               src={"http://localhost:5000/" + image.file}
-              alt="images"
+              alt="Example images"
               onClick={() => {
                 setIsMain(image.file);
                 setIsActive(image.id);
@@ -58,6 +64,7 @@ const Wrapper = styled.div`
   .img__main {
     max-height: 90vh;
     max-width: 90vh;
+    overflow: hidden;
   }
   .img__blok {
     width: 40%;
