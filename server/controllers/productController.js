@@ -1,18 +1,11 @@
 // const uuid = require("uuid");
 // const path = require("path");
 const {
-  User,
-  Basket,
-  BasketProduct,
   Product,
-  Image,
   Model,
   Size,
   Type,
   Color,
-  Rating,
-  ModelColor,
-  ProductColor,
   ProductSize,
   Img,
 } = require("../models/models");

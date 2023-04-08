@@ -7,14 +7,16 @@ interface IBasketState {
   error: unknown;
   totalProducts: number;
   totalCash: number;
+  isVisible: boolean;
 }
 
 const initialState: IBasketState = {
   baskets: [],
   isLoading: false,
   error: "",
-  totalProducts: 0,
+  totalProducts: 1,
   totalCash: 0,
+  isVisible: false,
 };
 
 export const basketSlice = createSlice({
@@ -48,6 +50,9 @@ export const basketSlice = createSlice({
     },
     removeBasketProduct(state, action: PayloadAction<IBasketProduct>) {
       state.baskets.filter((p) => p.id !== action.payload.id);
+    },
+    madeVisible(state, action: PayloadAction<boolean>) {
+      state.isVisible = action.payload;
     },
   },
 });

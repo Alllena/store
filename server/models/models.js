@@ -8,12 +8,13 @@ const User = sequelize.define("user", {
   role: { type: DataTypes.STRING, defaultValue: "USER" },
 });
 
+// const Basket = sequelize.define("basket", {
+//   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+// });
+
 const Basket = sequelize.define("basket", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-});
-
-const BasketProduct = sequelize.define("basket_product", {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  count: { type: DataTypes.INTEGER, allowNull: false },
 });
 
 const Product = sequelize.define("product", {
@@ -52,11 +53,6 @@ const Color = sequelize.define("color", {
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
 });
 
-const Rating = sequelize.define("rating", {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  rate: { type: DataTypes.INTEGER, allowNull: false },
-});
-
 const ProductSize = sequelize.define("product_size", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
@@ -72,17 +68,18 @@ const ModelColor = sequelize.define("model_color", {
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
-User.hasMany(Rating);
-Rating.belongsTo(User);
+// User.hasMany(Rating);
+// Rating.belongsTo(User);
 
-Basket.hasMany(BasketProduct);
-BasketProduct.belongsTo(Basket);
+User.hasMany(Basket);
+Basket.belongsTo(User);
 
-Product.hasMany(BasketProduct);
-BasketProduct.belongsTo(Product);
+Product.hasMany(Basket);
+Basket.belongsTo(Product);
+
+Size.hasMany(Basket);
+Basket.belongsTo(Size);
 // !_______________________
-Product.hasMany(Rating);
-Rating.belongsTo(Product);
 
 Product.hasMany(Img);
 Img.belongsTo(Product);
@@ -130,14 +127,14 @@ Color.belongsToMany(Product, { through: ProductColor });
 module.exports = {
   User,
   Basket,
-  BasketProduct,
+  // BasketProduct,
   Product,
   Img,
   Model,
   Size,
   Type,
   Color,
-  Rating,
+  // Rating,
   ModelColor,
   ProductColor,
   ProductSize,

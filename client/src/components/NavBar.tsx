@@ -15,12 +15,15 @@ import { userSlice } from "../store/userSlice";
 import { fetchTypes } from "../http/productAPI";
 import { useEffect } from "react";
 import { filterSlice } from "../store/filterSlice";
+import { Badge } from "antd";
+import { basketSlice } from "../store/basketSlice";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isSuccess, user } = useAppSelector((state) => state.userReducer);
   const { types } = useAppSelector((state) => state.typesReducer);
+  const { totalProducts } = useAppSelector((state) => state.basketReducer);
 
   useEffect(() => {
     dispatch(fetchTypes());
@@ -94,9 +97,16 @@ const NavBar = () => {
             {<UserAddOutlined />}
           </Button>
         )}
-        <Button onClick={() => {}} look={ButtonLook.header}>
-          <ShoppingFilled />
-        </Button>
+        <Badge count={totalProducts} color="#4096ff" offset={[-5, 10]}>
+          <Button
+            onClick={() => {
+              dispatch(basketSlice.actions.madeVisible(true));
+            }}
+            look={ButtonLook.header}
+          >
+            <ShoppingFilled />
+          </Button>
+        </Badge>
       </FlexContainer>
     </Wrapper>
   );

@@ -4,10 +4,15 @@ import Button, { ButtonLook } from "./base/Buttons";
 import { CloseSquareOutlined, DeleteOutlined } from "@ant-design/icons";
 import Counter from "./Counter";
 import { IBasketProduct } from "../models/IUsers";
+import { basketSlice } from "../store/basketSlice";
+import { useAppDispatch } from "../hooks/redux";
 
 const Basket = () => {
+  const dispatch = useAppDispatch();
+
   const basket: IBasketProduct = {
     id: 1,
+    userId: 0,
     count: 1,
     size: {
       id: 1,
@@ -49,7 +54,11 @@ const Basket = () => {
       <FlexContainer justify="space-between">
         <h2>Basket</h2>
         <Button look={ButtonLook.header} onClick={() => {}}>
-          <CloseSquareOutlined />
+          <CloseSquareOutlined
+            onClick={() => {
+              dispatch(basketSlice.actions.madeVisible(false));
+            }}
+          />
         </Button>
       </FlexContainer>
       <FlexContainer

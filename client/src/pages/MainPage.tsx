@@ -4,11 +4,13 @@ import Logo from "../components/base/Logo";
 import NavBar from "../components/NavBar";
 import { FlexContainer } from "../components/styled/FlexContainer";
 import Basket from "../components/Basket";
+import { useAppSelector } from "../hooks/redux";
 
 const MainPage = () => {
+  const { isVisible } = useAppSelector((state) => state.basketReducer);
   return (
     <PageWrapper>
-      {/* <Basket /> */}
+      {isVisible && <Basket />}
       <div className="row"></div>
       <FlexContainer className="header">
         <Logo></Logo>

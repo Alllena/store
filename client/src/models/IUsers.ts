@@ -1,6 +1,7 @@
 import { IProduct } from "./IProducts";
 
 export interface IBasketProduct {
+  userId: number;
   id: number;
   count: number;
   product: IProduct;

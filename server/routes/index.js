@@ -8,6 +8,7 @@ const sizeRouter = require("./sizeRouter");
 const modelRouter = require("./modelRouter");
 const typeRouter = require("./typeRouter");
 const imgRouter = require("./imgRouter");
+const basketRouter = require("./basketsRouter");
 
 router.use("/shop", productsRouter);
 router.use("/product", productRouter);
@@ -17,5 +18,6 @@ router.use("/color", colorRouter);
 router.use("/size", sizeRouter);
 router.use("/model", modelRouter);
 router.use("/img", imgRouter);
+router.use("/basket", basketRouter);
 
 module.exports = router;
