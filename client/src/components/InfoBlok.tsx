@@ -8,6 +8,8 @@ import ColorBlok from "./ColorBlok";
 import SalesLabel from "./SalesLabel";
 import SizeBlok from "./SizeBlok";
 import { FlexContainer } from "./styled/FlexContainer";
+import { useNavigate } from "react-router-dom";
+import { PRODUCT_ROUTE } from "../utils/consts";
 
 interface IProps {
   product: IProduct;
@@ -26,6 +28,9 @@ const InfoBlok: React.FC<IProps> = ({
     info,
   },
 }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   return (
     <Wrapper>
       <h2>
@@ -49,7 +54,14 @@ const InfoBlok: React.FC<IProps> = ({
       </FlexContainer>
       <span className="line"></span>
       <p>Color</p>
-      <ColorBlok model={model} />
+      <ColorBlok
+        model={model}
+        onClick={() => {
+          navigate(PRODUCT_ROUTE + `/${color.id}/${model.id}`);
+          dispatch(oneProductSlice.actions.setSelectedColor(color.id));
+          dispatch(oneProductSlice.actions.setSelectedModel(model.id));
+        }}
+      />
       <p>Size</p>
       <SizeBlok sizes={sizes} />
       <FlexContainer className="button__wrapper">

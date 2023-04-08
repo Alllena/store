@@ -4,28 +4,26 @@ import { IColor, IModel } from "../models/IProducts";
 import { oneProductSlice } from "../store/oneProductSlice";
 import { PRODUCT_ROUTE } from "../utils/consts";
 import { useNavigate } from "react-router-dom";
+import { FlexContainer } from "./styled/FlexContainer";
 
 interface IProps {
   model: IModel;
+  onClick: () => void;
 }
 
-const ColorBlok: React.FC<IProps> = ({ model }) => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
+const ColorBlok: React.FC<IProps> = ({ model, onClick }) => {
   return (
     <Wrapper>
       {model.colors?.map((color) => (
-        <Color
-          key={color.id}
-          className="color__item"
-          color={color.name}
-          onClick={() => {
-            navigate(PRODUCT_ROUTE + `/${color.id}/${model.id}`);
-            dispatch(oneProductSlice.actions.setSelectedColor(color.id));
-            dispatch(oneProductSlice.actions.setSelectedModel(model.id));
-          }}
-        />
+        <FlexContainer direction="column">
+          <Color
+            key={color.id}
+            className="color__item"
+            color={color.name}
+            onClick={onClick}
+          />
+          <FlexContainer>{color.name}</FlexContainer>
+        </FlexContainer>
       ))}
     </Wrapper>
   );
