@@ -46,6 +46,7 @@ const Card: React.FC<IProps> = ({
               .filter((item) => item.isSecond === true)
               .map((item) => (
                 <img
+                  key={item.id}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                   src={"http://localhost:5000/" + item.file}
@@ -56,6 +57,7 @@ const Card: React.FC<IProps> = ({
               .filter((item) => item.isMain === true)
               .map((item) => (
                 <img
+                  key={item.id}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                   src={"http://localhost:5000/" + item.file}

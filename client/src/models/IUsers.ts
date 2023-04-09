@@ -1,14 +1,12 @@
-import { IProduct } from "./IProducts";
+import { IProduct, ISize } from "./IProducts";
 
 export interface IBasketProduct {
   userId: number;
+  product: IProduct;
+  size: ISize;
+  sizeId: number;
   id: number;
   count: number;
-  product: IProduct;
-  size: {
-    id: number;
-    name: number;
-  };
 }
 
 export interface IUser {

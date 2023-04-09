@@ -10,6 +10,7 @@ import SizeBlok from "./SizeBlok";
 import { FlexContainer } from "./styled/FlexContainer";
 import { useNavigate } from "react-router-dom";
 import { PRODUCT_ROUTE } from "../utils/consts";
+import { createBasket } from "../http/userAPI";
 
 interface IProps {
   product: IProduct;
@@ -30,6 +31,24 @@ const InfoBlok: React.FC<IProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const { user } = useAppSelector((state) => state.userReducer);
+  const { productSizeSelected } = useAppSelector(
+    (state) => state.oneProductReducer
+  );
+
+  const addBasket = () => {
+    const productId = id;
+    const userId = user.id;
+    const count = 1;
+    const sizeId = productSizeSelected;
+    if (userId && count && productId && sizeId)
+      dispatch(createBasket(userId, count, productId, sizeId));
+    console.log("userId", userId);
+    console.log("count", count);
+    console.log("productId", productId);
+    console.log("sizeId", sizeId);
+  };
 
   return (
     <Wrapper>
@@ -65,7 +84,7 @@ const InfoBlok: React.FC<IProps> = ({
       <p>Size</p>
       <SizeBlok sizes={sizes} />
       <FlexContainer className="button__wrapper">
-        <Button onClick={() => {}} text="Add to basket">
+        <Button onClick={addBasket} text="Add to basket">
           <ShoppingFilled />
         </Button>
       </FlexContainer>

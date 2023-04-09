@@ -1,20 +1,29 @@
+import React, { FC } from "react";
+
 import styled from "styled-components";
 import Button, { ButtonLook } from "./base/Buttons";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { FlexContainer } from "./styled/FlexContainer";
 
-const Counter = () => {
+interface ICounterProps {
+  decrement: () => void;
+  increment: () => void;
+  count: number;
+  price: number;
+}
+
+const Counter: FC<ICounterProps> = ({ decrement, increment, count, price }) => {
   return (
     <CounterWrapper>
-      <Button onClick={() => {}} look={ButtonLook.main}>
+      <Button onClick={increment} look={ButtonLook.main}>
         <PlusOutlined />
       </Button>
-      <FlexContainer className="count"></FlexContainer>
-      <Button onClick={() => {}} look={ButtonLook.main}>
+      <FlexContainer className="count">{count}</FlexContainer>
+      <Button onClick={decrement} look={ButtonLook.main}>
         <MinusOutlined />
       </Button>
       <FlexContainer className="count__cash" justify="start">
-        €<span></span>
+        €<span>{price}</span>
       </FlexContainer>
     </CounterWrapper>
   );

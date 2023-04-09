@@ -106,7 +106,6 @@ class productController {
       ...(colorId && { colorId }),
     };
 
-    console.log(check);
     const product = await Product.findOne({
       where: check,
       attributes: ["id", "price", "sales", "isNew", "info"],

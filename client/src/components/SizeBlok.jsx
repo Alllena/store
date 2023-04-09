@@ -1,15 +1,25 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { oneProductSlice } from "../store/oneProductSlice";
 
 const SizeBlok = ({ sizes }) => {
-  const [isActive, setIsActive] = useState(Number);
+  const dispatch = useAppDispatch();
+  const { productSizeSelected } = useAppSelector(
+    (state) => state.oneProductReducer
+  );
   return (
     <Wrapper>
       {sizes.map((size) =>
-        isActive === size.id ? (
+        productSizeSelected === size.id ? (
           <div className="size__item active">{size.name}</div>
         ) : (
-          <div className="size__item" onClick={() => setIsActive(size.id)}>
+          <div
+            className="size__item"
+            onClick={() => {
+              dispatch(oneProductSlice.actions.setSelectedSize(size.id));
+            }}
+          >
             {size.name}
           </div>
         )

@@ -15,17 +15,18 @@ interface IProductsResponse {
 }
 
 export interface IQueryParams {
-  idType: string;
+  typeId: string | (string | null)[] | null;
+  isNew: string | (string | null)[] | null;
+  sales: string | (string | null)[] | null;
 }
 
 export const fetchProducts =
-  (queryParams: any) => async (dispatch: AppDispatch) => {
+  (queryParams: IQueryParams) => async (dispatch: AppDispatch) => {
     try {
       dispatch(productSlice.actions.productsFetching());
       const response = await $host.get<IProductsResponse>(
         `api/shop?${queryString.stringify(queryParams)}`
       );
-      console.log(queryParams);
       dispatch(
         productSlice.actions.productsFetchingSuccess(response.data.rows)
       );

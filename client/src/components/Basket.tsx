@@ -1,53 +1,24 @@
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { FlexContainer } from "./styled/FlexContainer";
 import Button, { ButtonLook } from "./base/Buttons";
 import { CloseSquareOutlined, DeleteOutlined } from "@ant-design/icons";
 import Counter from "./Counter";
-import { IBasketProduct } from "../models/IUsers";
 import { basketSlice } from "../store/basketSlice";
-import { useAppDispatch } from "../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { fetchBaskets, updateBaskets } from "../http/userAPI";
 
 const Basket = () => {
   const dispatch = useAppDispatch();
 
-  const basket: IBasketProduct = {
-    id: 1,
-    userId: 0,
-    count: 1,
-    size: {
-      id: 1,
-      name: 36,
-    },
-    product: {
-      id: 1,
-      price: 1000,
-      sales: 10,
-      isNew: false,
+  const { user } = useAppSelector((state) => state.userReducer);
+  const { baskets } = useAppSelector((state) => state.basketReducer);
+  console.log({ baskets });
 
-      color: {
-        id: 1,
-        name: "Black",
-      },
-      model: {
-        id: 1,
-        name: "Dusk Next",
-      },
-      imgs: [
-        {
-          isMain: true,
-          isSecond: false,
-          id: 2,
-          file: "864d93c4-071b-4eeb-89a2-904f34728b53.jpg",
-        },
-      ],
-    },
-  };
-
-  const {
-    id,
-    size,
-    product: { price, sales, color, imgs, model },
-  } = basket;
+  useEffect(() => {
+    const userId = user.id;
+    dispatch(fetchBaskets(String(userId)));
+  }, []);
 
   return (
     <BasketWrapper>
@@ -66,30 +37,46 @@ const Basket = () => {
         direction="column"
         justify="start"
       >
-        <FlexContainer
-          justify="space-between"
-          className="product__item"
-          gap="3px"
-        >
-          {imgs.map(
-            (img) =>
-              img.isMain && (
-                <img src={"http://localhost:5000/" + img.file} alt="images" />
-              )
-          )}
-          <FlexContainer direction="column" align="start">
-            <h4>
-              {model.name} {color.name}
-            </h4>
-            <p>
-              Size: <span>{size.name}</span>
-            </p>
-            <Counter />
+        {baskets.map((basket) => (
+          <FlexContainer
+            key={basket.id}
+            justify="space-between"
+            className="product__item"
+            gap="3px"
+          >
+            {basket.product.imgs &&
+              basket.product.imgs.map((img) => (
+                <img
+                  key={img.id}
+                  src={"http://localhost:5000/" + img.file}
+                  alt="images"
+                ></img>
+              ))}
+            <FlexContainer direction="column" align="start">
+              <h4>
+                {basket.product.model.name} {basket.product.color.name}
+              </h4>
+              <p>
+                Size: <span>{basket.size.name}</span>
+              </p>
+              <Counter
+                increment={() => {
+                  // dispatch(updateBaskets(basket.id));
+                  dispatch(updateBaskets(basket.id, basket.count + 1));
+                }}
+                decrement={() => {
+                  // dispatch(updateBaskets(basket.id));
+                  dispatch(updateBaskets(basket.id, basket.count - 1));
+                }}
+                count={basket.count}
+                price={basket.count * basket.product.price}
+              />
+            </FlexContainer>
+            <Button look={ButtonLook.header} onClick={() => {}}>
+              <DeleteOutlined />
+            </Button>
           </FlexContainer>
-          <Button look={ButtonLook.header} onClick={() => {}}>
-            <DeleteOutlined />
-          </Button>
-        </FlexContainer>
+        ))}
       </FlexContainer>
       <FlexContainer>
         <Button onClick={() => {}}>Checkout</Button>

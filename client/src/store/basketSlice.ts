@@ -14,7 +14,7 @@ const initialState: IBasketState = {
   baskets: [],
   isLoading: false,
   error: "",
-  totalProducts: 1,
+  totalProducts: 0,
   totalCash: 0,
   isVisible: false,
 };
@@ -30,6 +30,12 @@ export const basketSlice = createSlice({
       state.isLoading = false;
       state.error = "";
       state.baskets = action.payload;
+      state.totalProducts = state.baskets.reduce(
+        (accumulator, currentValue) => {
+          return accumulator + currentValue.count;
+        },
+        0
+      );
     },
     basketsFetchingError(state, action: PayloadAction<unknown>) {
       state.isLoading = false;
@@ -45,12 +51,22 @@ export const basketSlice = createSlice({
         }
       });
     },
-    addBasketProduct(state, action: PayloadAction<IBasketProduct>) {
+    basketCreateSuccess(state, action: PayloadAction<IBasketProduct>) {
       state.baskets.push(action.payload);
+      state.totalProducts = state.baskets.reduce(
+        (accumulator, currentValue) => {
+          return accumulator + currentValue.count;
+        },
+        0
+      );
     },
     removeBasketProduct(state, action: PayloadAction<IBasketProduct>) {
       state.baskets.filter((p) => p.id !== action.payload.id);
     },
+    updateBasketProduct(state, action: PayloadAction<IBasketProduct>) {
+      state.baskets.filter((p) => p.id !== action.payload.id);
+    },
+
     madeVisible(state, action: PayloadAction<boolean>) {
       state.isVisible = action.payload;
     },

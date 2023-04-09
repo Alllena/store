@@ -15,13 +15,8 @@ const ColorBlok: React.FC<IProps> = ({ model, onClick }) => {
   return (
     <Wrapper>
       {model.colors?.map((color) => (
-        <FlexContainer direction="column">
-          <Color
-            key={color.id}
-            className="color__item"
-            color={color.name}
-            onClick={onClick}
-          />
+        <FlexContainer key={color.id} direction="column">
+          <Color className="color__item" color={color.name} onClick={onClick} />
           <FlexContainer>{color.name}</FlexContainer>
         </FlexContainer>
       ))}

@@ -17,14 +17,13 @@ const ShopPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const { products, isLoading, error } = useAppSelector(
+  const { products, isLoading } = useAppSelector(
     (state) => state.productReducer
   );
 
   useEffect(() => {
-    const queryParams = getQueryParams(location);
-    dispatch(fetchProducts(queryParams));
-    console.log(location);
+    const { isNew, typeId, sales } = getQueryParams(location);
+    dispatch(fetchProducts({ isNew, typeId, sales }));
   }, [location]);
 
   return (
