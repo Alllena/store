@@ -1,0 +1,21 @@
+{
+  "name": "store",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently --kill-others \"cd client && npm run start\" \"cd server && npm run dev\" \"docker-compose up\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alllena/shoe_store.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alllena/shoe_store/issues"
+  },
+  "homepage": "https://github.com/Alllena/shoe_store#readme",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  }
+}

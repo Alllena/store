@@ -1,0 +1,27 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+a {
+   text-decoration: none;
+}
+
+ul,
+ol,
+li {
+   list-style: none;
+   list-style-type: none;
+}
+
+body {
+   min-width: 100vW;
+   min-height: 100vh;
+   overflow-x: hidden;
+   font-family: "Circular", sans-serif;
+   font-size: 18px;
+   font-weight: 700;
+   color: rgb(77, 76, 76);
+   background-color: #fff;
+}
