@@ -1,24 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IProduct } from "../models/IProducts";
 
-// const initialState: IProduct[] = [];
-
-// export const productSlice = createSlice({
-//   name: "product",
-//   initialState,
-//   reducers: {
-//     addItem: (state, action: PayloadAction<IProduct>) => {
-//       state.push(action.payload);
-//     },
-//     removeItem: (state, action: PayloadAction<{ id: number }>) => {
-//       return state.filter((p) => p.id !== action.payload.id);
-//     },
-//   },
-// });
-
-// export const productReducer = productSlice.reducer;
-// export const productAction = productSlice.actions;
-
 interface IProductState {
   products: IProduct[];
   isLoading: boolean;
