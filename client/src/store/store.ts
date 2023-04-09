@@ -5,6 +5,8 @@ import { basketReducer } from "./basketSlice";
 import { userReducer } from "./userSlice";
 import { typesReducer } from "./typeSlice";
 import { filterReducer } from "./filterSlice";
+import { sizeReducer } from "./sizeSlice";
+import { colorReducer } from "./colorSlice";
 
 const rootReducer = combineReducers({
   productReducer,
@@ -12,6 +14,8 @@ const rootReducer = combineReducers({
   basketReducer,
   userReducer,
   typesReducer,
+  colorReducer,
+  sizeReducer,
   filterReducer,
 });
 
