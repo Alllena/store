@@ -49,7 +49,7 @@ const Card: React.FC<IProps> = ({
                   key={item.id}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
-                  src={"http://localhost:5000/" + item.file}
+                  src={process.env.REACT_APP_API_URL + item.file}
                   alt={model.name}
                 />
               ))
@@ -60,7 +60,7 @@ const Card: React.FC<IProps> = ({
                   key={item.id}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
-                  src={"http://localhost:5000/" + item.file}
+                  src={process.env.REACT_APP_API_URL + item.file}
                   alt={model.name}
                 />
               ))}

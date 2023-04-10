@@ -48,7 +48,7 @@ const Basket = () => {
               basket.product.imgs.map((img) => (
                 <img
                   key={img.id}
-                  src={"http://localhost:5000/" + img.file}
+                  src={process.env.REACT_APP_API_URL + img.file}
                   alt="images"
                 ></img>
               ))}
