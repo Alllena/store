@@ -72,8 +72,6 @@ export const createType = (name: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(typesSlice.actions.typesFetching());
     const response = await $host.post("api/type", { name });
-
-    // const response = await $authHost.post("api/type", { type });
     dispatch(typesSlice.actions.typeCreateSuccess(response.data));
   } catch (e) {
     if (e instanceof AxiosError) {
@@ -131,25 +129,3 @@ export const createSize = (name: string) => async (dispatch: AppDispatch) => {
     }
   }
 };
-
-// export const createBrands = async (brand) => {
-//   const { data } = await $authHost.post("api/brand", brand);
-//   return data;
-// };
-// export const fetchBrands = async () => {
-//   const { data } = await $host.get("api/brand");
-//   return data;
-// };
-
-// export const createDevices = async (device) => {
-//   const { data } = await $authHost.post("api/device", device);
-//   return data;
-// };
-// export const fetchDevices = async () => {
-//   const { data } = await $host.get("api/device");
-//   return data;
-// };
-// export const fetchOneDevices = async (id) => {
-//   const { data } = await $host.get("api/device/" + id);
-//   return data;
-// };
