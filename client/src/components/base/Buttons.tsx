@@ -10,7 +10,7 @@ export enum ButtonLook {
 }
 
 interface ButtonProps {
-  onClick: () => void;
+  onClick: (e: any) => void;
   children?: ReactElement | React.ReactNode;
   look?: ButtonLook;
   text?: string;

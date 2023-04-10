@@ -4,9 +4,9 @@ import { FlexContainer } from "./styled/FlexContainer";
 import { ShoppingFilled } from "@ant-design/icons";
 import Button from "./base/Buttons";
 import { IProduct } from "../models/IProducts";
-import { useNavigate } from "react-router-dom";
-import { PRODUCT_ROUTE } from "../utils/consts";
 import SizeBlock from "./SizeBlock";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { createBasket, fetchBaskets } from "../http/userAPI";
 
 interface IProps {
   product: IProduct;
@@ -26,6 +26,11 @@ const Card: React.FC<IProps> = ({
   },
   onClick,
 }) => {
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.userReducer);
+  const { productSizeSelected } = useAppSelector(
+    (state) => state.oneProductReducer
+  );
   const [isHover, setIsHover] = useState(false);
 
   const handleMouseEnter = () => {
@@ -36,6 +41,15 @@ const Card: React.FC<IProps> = ({
     setIsHover(false);
   };
 
+  const addBasket = () => {
+    const productId = id;
+    const userId = user.id;
+    const count = 1;
+    const sizeId = productSizeSelected;
+    if (userId && count && productId && sizeId)
+      dispatch(createBasket(userId, count, productId, sizeId));
+  };
+
   return (
     <CardWrapper onClick={onClick}>
       <FlexContainer className="img__bloc">
@@ -44,7 +58,7 @@ const Card: React.FC<IProps> = ({
         )}
         {isHover
           ? imgs
-              .filter((item) => item.isSecond === true)
+              ?.filter((item) => item.isSecond === true)
               .map((item) => (
                 <img
                   key={item.id}
@@ -55,7 +69,7 @@ const Card: React.FC<IProps> = ({
                 />
               ))
           : imgs
-              .filter((item) => item.isMain === true)
+              ?.filter((item) => item.isMain === true)
               .map((item) => (
                 <img
                   key={item.id}
@@ -72,13 +86,6 @@ const Card: React.FC<IProps> = ({
         ))}
       </FlexContainer>
       <SizeBlock sizes={sizes} productId={id} />
-      {/* <FlexContainer className="size__bloc">
-        {sizes?.map((size) => (
-          <div key={size.id} className="size__item">
-            {size.name}
-          </div>
-        ))}
-      </FlexContainer> */}
       <FlexContainer className="info__bloc" wrap="nowrap">
         <FlexContainer direction="column" wrap="nowrap" align="start">
           <div className="product__name">{model.name}</div>
@@ -95,7 +102,12 @@ const Card: React.FC<IProps> = ({
             )}
           </FlexContainer>
         </FlexContainer>
-        <Button onClick={() => {}}>
+        <Button
+          onClick={(e) => {
+            e.stopPropagation();
+            addBasket();
+          }}
+        >
           <ShoppingFilled />
         </Button>
       </FlexContainer>
