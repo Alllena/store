@@ -44,10 +44,6 @@ const InfoBlok: React.FC<IProps> = ({
     const sizeId = productSizeSelected;
     if (userId && count && productId && sizeId)
       dispatch(createBasket(userId, count, productId, sizeId));
-    console.log("userId", userId);
-    console.log("count", count);
-    console.log("productId", productId);
-    console.log("sizeId", sizeId);
   };
 
   return (

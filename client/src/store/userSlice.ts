@@ -6,7 +6,7 @@ interface IUserState {
   isLogin: boolean;
   isLoading: boolean;
   error: unknown | string;
-  isSuccess: boolean;
+  isAuth: boolean;
 }
 
 const initialState: IUserState = {
@@ -14,7 +14,7 @@ const initialState: IUserState = {
   isLoading: false,
   user: { id: 0, email: "", role: "" },
   error: "",
-  isSuccess: false,
+  isAuth: false,
 };
 
 export const userSlice = createSlice({
@@ -29,14 +29,14 @@ export const userSlice = createSlice({
       state.isLogin = true;
       state.error = "";
       state.user = action.payload;
-      state.isSuccess = true;
+      state.isAuth = true;
     },
     userLoginSuccess(state, action: PayloadAction<IUser>) {
       state.isLoading = false;
       state.isLogin = true;
       state.error = "";
       state.user = action.payload;
-      state.isSuccess = true;
+      state.isAuth = true;
     },
     userFetchingError(state, action: PayloadAction<unknown>) {
       state.isLoading = false;
@@ -46,8 +46,8 @@ export const userSlice = createSlice({
     userIsLogin(state, action: PayloadAction<boolean>) {
       state.isLogin = action.payload;
     },
-    userIsSuccess(state) {
-      state.isSuccess = false;
+    isAuth(state) {
+      state.isAuth = false;
     },
   },
 });

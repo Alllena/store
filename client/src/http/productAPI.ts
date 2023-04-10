@@ -71,7 +71,7 @@ export const fetchTypes = () => async (dispatch: AppDispatch) => {
 export const createType = (name: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(typesSlice.actions.typesFetching());
-    const response = await $host.post("api/type", { name });
+    const response = await $authHost.post("api/type", { name });
     dispatch(typesSlice.actions.typeCreateSuccess(response.data));
   } catch (e) {
     if (e instanceof AxiosError) {
@@ -96,7 +96,7 @@ export const fetchColor = () => async (dispatch: AppDispatch) => {
 export const createColor = (name: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(colorsSlice.actions.colorsFetching());
-    const response = await $host.post("api/color", { name });
+    const response = await $authHost.post("api/color", { name });
     dispatch(colorsSlice.actions.colorCreateSuccess(response.data));
   } catch (e) {
     if (e instanceof AxiosError) {
@@ -121,7 +121,7 @@ export const fetchSize = () => async (dispatch: AppDispatch) => {
 export const createSize = (name: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(sizeSlice.actions.sizesFetching());
-    const response = await $host.post("api/size", { name });
+    const response = await $authHost.post("api/size", { name });
     dispatch(sizeSlice.actions.colorCreateSuccess(response.data));
   } catch (e) {
     if (e instanceof AxiosError) {

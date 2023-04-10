@@ -9,7 +9,6 @@ class imgController {
     try {
       let { productId, isMain, isSecond } = req.body;
       let { file } = req.files;
-      console.log(file);
       let fileName = uuid.v4() + ".jpg";
       file.mv(path.resolve(__dirname, "..", "static", fileName));
 

@@ -33,6 +33,7 @@ export const typesSlice = createSlice({
     typesFetchingError(state, action: PayloadAction<unknown>) {
       state.isLoading = false;
       state.error = action.payload;
+      console.log(state.error);
     },
   },
 });

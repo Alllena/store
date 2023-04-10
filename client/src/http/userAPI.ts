@@ -45,12 +45,19 @@ export const login =
     }
   };
 
-export const check = async () => {
-  const { data } = await $authHost.get("api/user/auth");
-  localStorage.setItem("token", data.token);
-  return jwt_decode(data.token);
+export const check = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(userSlice.actions.userFetching());
+    const response = await $authHost.get("api/user/auth");
+    localStorage.setItem("token", response.data.token);
+    dispatch(
+      userSlice.actions.userLoginSuccess(jwt_decode(response.data.token))
+    );
+  } catch (e) {
+    if (e instanceof AxiosError)
+      dispatch(userSlice.actions.userFetchingError(e.response?.data.message));
+  }
 };
-// !-------
 
 export const createBasket =
   (count: number, userId: number, productId: number, sizeId: number) =>
@@ -110,7 +117,6 @@ export const updateBaskets =
 export const removeBaskets = (id: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(basketSlice.actions.basketsFetching());
-    console.log(id);
     await $host.put<IBasketProduct[]>("api/basket/destroy", { id });
     dispatch(basketSlice.actions.removeBasketProduct({ id }));
   } catch (e) {

@@ -15,13 +15,13 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-  const { isLogin, error, isSuccess } = useAppSelector(
+  const { isLogin, error, isAuth } = useAppSelector(
     (state) => state.userReducer
   );
 
   useEffect(() => {
-    isSuccess && navigate(SHOP_ROUTE);
-  }, [isSuccess]);
+    isAuth && navigate(SHOP_ROUTE);
+  }, []);
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
