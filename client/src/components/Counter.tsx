@@ -1,5 +1,4 @@
-import React, { FC } from "react";
-
+import React, { FC, useState, useMemo, useEffect } from "react";
 import styled from "styled-components";
 import Button, { ButtonLook } from "./base/Buttons";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
@@ -10,9 +9,27 @@ interface ICounterProps {
   increment: () => void;
   count: number;
   price: number;
+  sales: number;
 }
 
-const Counter: FC<ICounterProps> = ({ decrement, increment, count, price }) => {
+const Counter: FC<ICounterProps> = ({
+  decrement,
+  increment,
+  count,
+  price,
+  sales,
+}) => {
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    count && price && countPriceProducts();
+  }, [count]);
+
+  const countPriceProducts = () => {
+    const counter = count * (price - (price * sales) / 100);
+    setTotalPrice(counter);
+  };
+
   return (
     <CounterWrapper>
       <Button onClick={increment} look={ButtonLook.main}>
@@ -23,7 +40,7 @@ const Counter: FC<ICounterProps> = ({ decrement, increment, count, price }) => {
         <MinusOutlined />
       </Button>
       <FlexContainer className="count__cash" justify="start">
-        €<span>{price}</span>
+        €<span>{totalPrice}</span>
       </FlexContainer>
     </CounterWrapper>
   );
@@ -34,6 +51,7 @@ const CounterWrapper = styled.div`
   display: flex;
   gap: 5px;
   font-size: 22px;
+  font-weight: 400;
   .count {
     width: 70px;
   }
