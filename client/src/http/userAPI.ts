@@ -92,14 +92,12 @@ export const updateBaskets =
   (id: number, count: number) => async (dispatch: AppDispatch) => {
     try {
       dispatch(basketSlice.actions.basketsFetching());
-      console.log(id);
-      const response = await $host.post<IBasketProduct[]>(
+      await $host.post<IBasketProduct[]>(
         `api/basket/update?${queryString.stringify({
           id: id,
         })}&&${queryString.stringify({ count: count })}`
       );
-      console.log(response.data);
-      // dispatch(basketSlice.actions.basketsFetchingSuccess(response.data));
+      dispatch(basketSlice.actions.updateCountBasketProduct({ id, count }));
     } catch (e) {
       if (e instanceof AxiosError) {
         dispatch(
@@ -108,3 +106,18 @@ export const updateBaskets =
       }
     }
   };
+
+export const removeBaskets = (id: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(basketSlice.actions.basketsFetching());
+    console.log(id);
+    await $host.put<IBasketProduct[]>("api/basket/destroy", { id });
+    dispatch(basketSlice.actions.removeBasketProduct({ id }));
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      dispatch(
+        basketSlice.actions.basketsFetchingError(e.response?.data.message)
+      );
+    }
+  }
+};

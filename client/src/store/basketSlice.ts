@@ -6,7 +6,6 @@ interface IBasketState {
   isLoading: boolean;
   error: unknown;
   totalProducts: number;
-  totalCash: number;
   isVisible: boolean;
 }
 
@@ -15,7 +14,6 @@ const initialState: IBasketState = {
   isLoading: false,
   error: "",
   totalProducts: 0,
-  totalCash: 0,
   isVisible: false,
 };
 
@@ -41,7 +39,7 @@ export const basketSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    addCountBasketProduct(
+    updateCountBasketProduct(
       state,
       action: PayloadAction<{ id: number; count: number }>
     ) {
@@ -60,11 +58,14 @@ export const basketSlice = createSlice({
         0
       );
     },
-    removeBasketProduct(state, action: PayloadAction<IBasketProduct>) {
-      state.baskets.filter((p) => p.id !== action.payload.id);
-    },
-    updateBasketProduct(state, action: PayloadAction<IBasketProduct>) {
-      state.baskets.filter((p) => p.id !== action.payload.id);
+    removeBasketProduct(state, action: PayloadAction<{ id: string }>) {
+      state.baskets = state.baskets.filter((p) => p.id !== +action.payload.id);
+      state.totalProducts = state.baskets.reduce(
+        (accumulator, currentValue) => {
+          return accumulator + currentValue.count;
+        },
+        0
+      );
     },
 
     madeVisible(state, action: PayloadAction<boolean>) {
