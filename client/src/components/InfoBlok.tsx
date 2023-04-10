@@ -6,7 +6,7 @@ import { oneProductSlice } from "../store/oneProductSlice";
 import Button from "./base/Buttons";
 import ColorBlok from "./ColorBlok";
 import SalesLabel from "./SalesLabel";
-import SizeBlok from "./SizeBlok";
+import SizeBlock from "./SizeBlock";
 import { FlexContainer } from "./styled/FlexContainer";
 import { useNavigate } from "react-router-dom";
 import { PRODUCT_ROUTE } from "../utils/consts";
@@ -78,7 +78,7 @@ const InfoBlok: React.FC<IProps> = ({
         }}
       />
       <p>Size</p>
-      <SizeBlok sizes={sizes} />
+      <SizeBlock sizes={sizes} productId={id} />
       <FlexContainer className="button__wrapper">
         <Button onClick={addBasket} text="Add to basket">
           <ShoppingFilled />

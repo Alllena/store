@@ -1,23 +1,38 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { oneProductSlice } from "../store/oneProductSlice";
+import { ISize } from "../models/IProducts";
 
-const SizeBlok = ({ sizes }) => {
+interface ISizeBlockProps {
+  sizes?: ISize[];
+  productId: number;
+}
+
+const SizeBlock: FC<ISizeBlockProps> = ({ sizes, productId }) => {
   const dispatch = useAppDispatch();
-  const { productSizeSelected } = useAppSelector(
+  const { productSizeSelected, product } = useAppSelector(
     (state) => state.oneProductReducer
   );
   return (
     <Wrapper>
-      {sizes.map((size) =>
-        productSizeSelected === size.id ? (
-          <div className="size__item active">{size.name}</div>
+      {sizes?.map((size) =>
+        productId === product.id && productSizeSelected === size.id ? (
+          <div key={size.id} className="size__item active">
+            {size.name}
+          </div>
         ) : (
           <div
+            key={size.id}
             className="size__item"
-            onClick={() => {
-              dispatch(oneProductSlice.actions.setSelectedSize(size.id));
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(
+                oneProductSlice.actions.setSelectedSize({
+                  sizeId: size.id,
+                  productId,
+                })
+              );
             }}
           >
             {size.name}
@@ -28,7 +43,7 @@ const SizeBlok = ({ sizes }) => {
   );
 };
 
-export default SizeBlok;
+export default SizeBlock;
 
 const Wrapper = styled.div`
   width: 100%;

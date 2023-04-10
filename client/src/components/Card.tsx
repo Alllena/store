@@ -6,6 +6,7 @@ import Button from "./base/Buttons";
 import { IProduct } from "../models/IProducts";
 import { useNavigate } from "react-router-dom";
 import { PRODUCT_ROUTE } from "../utils/consts";
+import SizeBlock from "./SizeBlock";
 
 interface IProps {
   product: IProduct;
@@ -70,13 +71,14 @@ const Card: React.FC<IProps> = ({
           <Color key={color.id} className="color__item" color={color.name} />
         ))}
       </FlexContainer>
-      <FlexContainer className="size__bloc">
+      <SizeBlock sizes={sizes} productId={id} />
+      {/* <FlexContainer className="size__bloc">
         {sizes?.map((size) => (
           <div key={size.id} className="size__item">
             {size.name}
           </div>
         ))}
-      </FlexContainer>
+      </FlexContainer> */}
       <FlexContainer className="info__bloc" wrap="nowrap">
         <FlexContainer direction="column" wrap="nowrap" align="start">
           <div className="product__name">{model.name}</div>
