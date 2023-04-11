@@ -3,6 +3,7 @@ import { OutletWrapper } from "../components/styled/OutletWrapper";
 import CreateColor from "../components/create/CreateColor";
 import CreateSize from "../components/create/CreateSize";
 import CreateType from "../components/create/CreateType";
+import CreateModel from "../components/create/CreateModel";
 
 const AdminPage = () => {
   return (
@@ -22,7 +23,7 @@ const AdminPage = () => {
         </details>
         <details>
           <summary>Models</summary>
-          <CreateSize />
+          <CreateModel />
         </details>
         <details>
           <summary>Products</summary>

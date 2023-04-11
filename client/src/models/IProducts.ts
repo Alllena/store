@@ -18,7 +18,7 @@ export interface ISize {
 export interface IModel {
   id: number;
   name: string;
-  colors?: IColor[];
+  colors: IColor[];
 }
 export interface IType {
   id: number;

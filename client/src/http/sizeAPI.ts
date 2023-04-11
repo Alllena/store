@@ -32,7 +32,7 @@ export const updateSize =
     try {
       dispatch(sizeSlice.actions.sizesFetching());
       console.log(id, name);
-      await $authHost.put<ISize[]>("api/color/update", { id, name });
+      await $authHost.put<ISize[]>("api/size/update", { id, name });
       dispatch(sizeSlice.actions.updateSize({ id, name }));
     } catch (e) {
       if (e instanceof AxiosError) {
@@ -46,7 +46,7 @@ export const updateSize =
 export const removeSize = (id: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(sizeSlice.actions.sizesFetching());
-    await $authHost.put<ISize[]>("api/color/destroy", { id });
+    await $authHost.put<ISize[]>("api/size/destroy", { id });
     dispatch(sizeSlice.actions.removeSize({ id }));
   } catch (e) {
     if (e instanceof AxiosError) {

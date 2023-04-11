@@ -1,4 +1,4 @@
-const { Model, ModelColor } = require("../models/models");
+const { Model, ModelColor, Color } = require("../models/models");
 const ApiError = require("../error/ApiError");
 
 class ModelController {
@@ -6,9 +6,7 @@ class ModelController {
     try {
       const { name, colors } = req.body;
       const model = await Model.create({ name });
-
       if (colors) {
-        // colors = JSON.parse(colors);
         colors.forEach((i) =>
           ModelColor.create({
             colorId: i.colorId,
@@ -22,8 +20,26 @@ class ModelController {
     }
   }
   async getAll(req, res) {
-    const models = await Model.findAll();
+    const models = await Model.findAll({
+      attributes: ["id", "name"],
+      include: [
+        {
+          model: Color,
+          attributes: ["id", "name"],
+        },
+      ],
+    });
     return res.json(models);
+  }
+  async destroy(req, res) {
+    const { id } = req.body;
+    const data = await Model.destroy({ where: { id } });
+    return res.json(data);
+  }
+  async update(req, res) {
+    const { id, name } = req.body;
+    const data = await Model.update({ name }, { where: { id } });
+    return res.json(data);
   }
 }
 module.exports = new ModelController();

@@ -7,14 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { FlexContainer } from "./styled/FlexContainer";
 
 interface IProps {
-  model: IModel;
-  onClick: () => void;
+  colors?: IColor[];
+  onClick?: () => void;
 }
 
-const ColorBlok: React.FC<IProps> = ({ model, onClick }) => {
+const ColorBlok: React.FC<IProps> = ({ colors, onClick }) => {
   return (
     <Wrapper>
-      {model.colors?.map((color) => (
+      {colors?.map((color) => (
         <FlexContainer key={color.id} direction="column">
           <Color className="color__item" color={color.name} onClick={onClick} />
           <FlexContainer>{color.name}</FlexContainer>

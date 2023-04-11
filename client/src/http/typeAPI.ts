@@ -32,7 +32,7 @@ export const updateType =
     try {
       dispatch(typesSlice.actions.typesFetching());
       console.log(id, name);
-      await $authHost.put<IType[]>("api/color/update", { id, name });
+      await $authHost.put<IType[]>("api/type/update", { id, name });
       dispatch(typesSlice.actions.updateType({ id, name }));
     } catch (e) {
       if (e instanceof AxiosError) {
@@ -46,7 +46,7 @@ export const updateType =
 export const removeType = (id: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(typesSlice.actions.typesFetching());
-    await $authHost.put<IType[]>("api/color/destroy", { id });
+    await $authHost.put<IType[]>("api/type/destroy", { id });
     dispatch(typesSlice.actions.removeType({ id }));
   } catch (e) {
     if (e instanceof AxiosError) {

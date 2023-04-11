@@ -70,7 +70,7 @@ const InfoBlok: React.FC<IProps> = ({
       <span className="line"></span>
       <p>Color</p>
       <ColorBlok
-        model={model}
+        colors={model.colors}
         onClick={() => {
           navigate(PRODUCT_ROUTE + `/${color.id}/${model.id}`);
           dispatch(oneProductSlice.actions.setSelectedColor(color.id));
