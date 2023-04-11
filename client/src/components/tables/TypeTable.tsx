@@ -1,46 +1,54 @@
 import React from "react";
-import { Space, Table } from "antd";
-import type { ColumnsType } from "antd/es/table";
+import { Space, Table, Button } from "antd";
 import { IType } from "../../models/IProducts";
-import Button, { ButtonLook } from "../base/Buttons";
 import { DeleteOutlined } from "@ant-design/icons";
-
-const columns: ColumnsType<IType> = [
-  {
-    title: "Id",
-    dataIndex: "id",
-    key: "id",
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    render: (text) => <p>{text}</p>,
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: () => (
-      <Space align="end">
-        <Button look={ButtonLook.main} onClick={() => {}}>
-          <DeleteOutlined />
-        </Button>
-      </Space>
-    ),
-  },
-];
+import { removeType } from "../../http/typeAPI";
+import Column from "antd/es/table/Column";
+import { useAppDispatch } from "../../hooks/redux";
 
 interface ITableProps {
   types: IType[];
 }
-const TypesTable: React.FC<ITableProps> = ({ types }) => (
-  <Table
-    size="small"
-    columns={columns}
-    dataSource={types}
-    pagination={{
-      defaultPageSize: 5,
-    }}
-  />
-);
-export default TypesTable;
+const TypeTable: React.FC<ITableProps> = ({ types }) => {
+  const dispatch = useAppDispatch();
+  const editItem = (typeId: string) => {
+    dispatch(removeType(typeId));
+  };
+
+  return (
+    <Table
+      pagination={{
+        defaultPageSize: 5,
+      }}
+      dataSource={types}
+    >
+      <Column title="Id" dataIndex="id" key="id" width="100px" align="center" />
+      <Column
+        title="Name"
+        dataIndex="name"
+        key="name"
+        render={(text) => <p>{text}</p>}
+      />
+      <Column
+        title="Action"
+        dataIndex="id"
+        key="id"
+        width="100px"
+        align="center"
+        render={(id) => (
+          <Space>
+            <Button
+              type="primary"
+              onClick={() => {
+                editItem(String(id));
+              }}
+            >
+              <DeleteOutlined />
+            </Button>
+          </Space>
+        )}
+      />
+    </Table>
+  );
+};
+export default TypeTable;

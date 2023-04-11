@@ -33,7 +33,18 @@ export const typesSlice = createSlice({
     typesFetchingError(state, action: PayloadAction<unknown>) {
       state.isLoading = false;
       state.error = action.payload;
-      console.log(state.error);
+    },
+    removeType(state, action: PayloadAction<{ id: string }>) {
+      state.types = state.types.filter(
+        (type) => type.id !== +action.payload.id
+      );
+    },
+    updateType(state, action: PayloadAction<{ id: number; name: string }>) {
+      state.types.forEach((type) => {
+        if (type.id === action.payload.id) {
+          type.name = action.payload.name;
+        }
+      });
     },
   },
 });

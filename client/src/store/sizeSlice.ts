@@ -30,7 +30,7 @@ export const sizeSlice = createSlice({
       state.error = "";
       state.sizes = action.payload;
     },
-    colorCreateSuccess(state, action: PayloadAction<ISize>) {
+    sizeCreateSuccess(state, action: PayloadAction<ISize>) {
       state.isLoading = false;
       state.error = "";
       state.sizes.push(action.payload);
@@ -38,6 +38,18 @@ export const sizeSlice = createSlice({
     sizesFetchingError(state, action: PayloadAction<unknown>) {
       state.isLoading = false;
       state.error = action.payload;
+    },
+    removeSize(state, action: PayloadAction<{ id: string }>) {
+      state.sizes = state.sizes.filter(
+        (size) => size.id !== +action.payload.id
+      );
+    },
+    updateSize(state, action: PayloadAction<{ id: number; name: number }>) {
+      state.sizes.forEach((size) => {
+        if (size.id === action.payload.id) {
+          size.name = action.payload.name;
+        }
+      });
     },
   },
 });

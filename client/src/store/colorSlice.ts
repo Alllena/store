@@ -39,6 +39,18 @@ export const colorsSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    removeColor(state, action: PayloadAction<{ id: string }>) {
+      state.colors = state.colors.filter(
+        (color) => color.id !== +action.payload.id
+      );
+    },
+    updateColor(state, action: PayloadAction<{ id: number; name: string }>) {
+      state.colors.forEach((color) => {
+        if (color.id === action.payload.id) {
+          color.name = action.payload.name;
+        }
+      });
+    },
   },
 });
 

@@ -12,7 +12,7 @@ import { FlexContainer } from "./styled/FlexContainer";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { userSlice } from "../store/userSlice";
-import { fetchTypes } from "../http/productAPI";
+import { fetchTypes } from "../http/typeAPI";
 import { useEffect } from "react";
 import { filterSlice } from "../store/filterSlice";
 import { Badge } from "antd";

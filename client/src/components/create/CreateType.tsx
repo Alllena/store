@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { FlexContainer } from "../styled/FlexContainer";
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, Input } from "antd";
-import { createType, fetchTypes } from "../../http/productAPI";
+import { createType, fetchTypes } from "../../http/typeAPI";
 import TypesTable from "../tables/TypeTable";
 
 const CreateType = () => {
@@ -37,7 +37,7 @@ const CreateType = () => {
   return (
     <PageWrapper>
       <FlexContainer justify="space-between" className="title">
-        <Button type="primary" onClick={showModal}>
+        <Button type="primary" onClick={showModal} size="large">
           Add type
         </Button>
         <Modal

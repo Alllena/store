@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { FlexContainer } from "../styled/FlexContainer";
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, Input } from "antd";
-import { createColor, fetchColor } from "../../http/productAPI";
+import { createColor, fetchColor } from "../../http/colorApi";
 
 const CreateColor = () => {
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ const CreateColor = () => {
   return (
     <PageWrapper>
       <FlexContainer justify="space-between" className="title">
-        <Button type="primary" onClick={showModal}>
+        <Button type="primary" onClick={showModal} size="large">
           Add color
         </Button>
         <Modal

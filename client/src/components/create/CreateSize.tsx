@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { FlexContainer } from "../styled/FlexContainer";
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, Input } from "antd";
-import { createSize, fetchSize } from "../../http/productAPI";
+import { createSize, fetchSize } from "../../http/sizeAPI";
 import SizesTable from "../tables/SizeTable";
 
 const CreateSize = () => {
@@ -37,7 +37,7 @@ const CreateSize = () => {
   return (
     <PageWrapper>
       <FlexContainer justify="space-between" className="title">
-        <Button type="primary" onClick={showModal}>
+        <Button type="primary" onClick={showModal} size="large">
           Add size
         </Button>
         <Modal
