@@ -40,7 +40,7 @@ const ColorTable: React.FC<ITableProps> = ({ colors }) => (
     }}
     size="small"
     columns={columns}
-    dataSource={colors}
+    // dataSource={colors}
   />
 );
 export default ColorTable;

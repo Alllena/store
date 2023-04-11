@@ -37,7 +37,6 @@ const CreateSize = () => {
   return (
     <PageWrapper>
       <FlexContainer justify="space-between" className="title">
-        <h2>Sizes</h2>
         <Button type="primary" onClick={showModal}>
           Add size
         </Button>
