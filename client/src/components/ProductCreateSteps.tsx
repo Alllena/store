@@ -1,24 +1,35 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Button, message, Steps } from "antd";
 import ProductForm from "./form/ProductForm";
 import styled from "styled-components";
-
-const steps = [
-  {
-    title: "Add data",
-    content: <ProductForm />,
-  },
-  {
-    title: "Add files",
-    content: <div> шаг 3</div>,
-  },
-];
+import useProductForm from "../hooks/useProductForm";
 
 const ProductCreateSteps: React.FC = () => {
+  const { productForm, setProductForm, addDevice } = useProductForm();
+
   const [current, setCurrent] = useState(0);
 
+  const steps = useMemo(() => {
+    return [
+      {
+        title: "Add data",
+        content: (
+          <ProductForm
+            productForm={productForm}
+            setProductForm={setProductForm}
+          />
+        ),
+      },
+      {
+        title: "Add files",
+        content: <div> шаг 3</div>,
+      },
+    ];
+  }, [productForm, setProductForm]);
+
   const next = () => {
-    setCurrent(current + 1);
+    addDevice();
+    setCurrent(() => current + 1);
   };
 
   const prev = () => {

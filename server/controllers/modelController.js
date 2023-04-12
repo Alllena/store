@@ -5,6 +5,7 @@ class ModelController {
   async create(req, res, next) {
     try {
       const { name, colors } = req.body;
+      console.log("_________model________", req.body);
       const model = await Model.create({ name });
       if (colors) {
         colors.forEach((i) =>

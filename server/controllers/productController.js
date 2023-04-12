@@ -14,8 +14,7 @@ const ApiError = require("../error/ApiError");
 class productController {
   async create(req, res, next) {
     try {
-      let { info, price, sales, isNew, typeId, modelId, colorId, sizes } =
-        req.body;
+      let { info, price, sales, isNew, typeId, modelId, colorId } = req.body;
 
       const product = await Product.create({
         modelId,
@@ -27,15 +26,15 @@ class productController {
         colorId,
       });
 
-      if (sizes) {
-        // sizes = JSON.parse(sizes);
-        sizes.forEach((i) =>
-          ProductSize.create({
-            sizeId: i.sizeId,
-            productId: product.id,
-          })
-        );
-      }
+      // if (sizes) {
+      //   // sizes = JSON.parse(sizes);
+      //   sizes.forEach((i) =>
+      //     ProductSize.create({
+      //       sizeId: i.sizeId,
+      //       productId: product.id,
+      //     })
+      //   );
+      // }
 
       return res.json(product);
     } catch (e) {

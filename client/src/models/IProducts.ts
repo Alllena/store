@@ -37,3 +37,13 @@ export interface IProduct {
   type?: IType;
   info?: string;
 }
+
+export interface IProductForm {
+  typeId: string;
+  modelId: string;
+  colorId: string;
+  isNew: boolean;
+  sales: number | null;
+  price: number | null;
+  sizesId: ISize[];
+}

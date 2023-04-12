@@ -1,42 +1,30 @@
-import React, { useState } from "react";
 import { Form, Select, InputNumber } from "antd";
-import { createProduct } from "../../http/productAPI";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { ISize } from "../../models/IProducts";
+import { useAppSelector } from "../../hooks/redux";
+import { IProductForm } from "../../models/IProducts";
 
-export const ProductForm: React.FC = () => {
-  const dispatch = useAppDispatch();
+interface IProductFormProps {
+  productForm: IProductForm;
+  setProductForm: React.Dispatch<React.SetStateAction<IProductForm>>;
+}
+
+export const ProductForm: React.FC<IProductFormProps> = ({
+  productForm,
+  setProductForm,
+}) => {
+  const { typeId, modelId, colorId, isNew, sales, price, sizesId } =
+    productForm;
+
   const { types } = useAppSelector((state) => state.typesReducer);
   const { sizes } = useAppSelector((state) => state.sizeReducer);
   const { models } = useAppSelector((state) => state.modelReducer);
 
-  const [typeId, setTypeId] = useState<string>("");
-  const [modelId, setModelId] = useState<string>("");
-  const [colorId, setColorId] = useState<string>("");
-  const [isNew, setIsNew] = useState<boolean>(false);
-  const [sales, setSales] = useState<number | null>(0);
-  const [price, setPrice] = useState<number | null>(0);
-  const [sizesId, setSizesId] = useState<ISize[]>([]);
-
   const filteredOptions = sizes.filter((o) => !sizesId.includes(o));
 
-  const addDevice = () => {
-    let formData = new FormData();
-    formData.append("typeId", typeId);
-    formData.append("modelId", modelId);
-    formData.append("colorId", colorId);
-    formData.append("isNew", `${isNew}`);
-    formData.append("sales", `${sales}`);
-    formData.append("price", `${price}`);
-    formData.append("sizesId", JSON.stringify(sizesId));
-    dispatch(createProduct(formData));
-  };
-
   const onChangeSales = (value: number | null) => {
-    setSales(value);
+    setProductForm((prev) => ({ ...prev, sales: value }));
   };
   const onChangePrice = (value: number | null) => {
-    setPrice(value);
+    setProductForm((prev) => ({ ...prev, price: value }));
   };
 
   return (
@@ -47,7 +35,12 @@ export const ProductForm: React.FC = () => {
       style={{ maxWidth: 600 }}
     >
       <Form.Item label="Type">
-        <Select value={typeId} onChange={(value) => setTypeId(value)}>
+        <Select
+          value={typeId}
+          onChange={(value) => {
+            setProductForm((prev) => ({ ...prev, typeId: value }));
+          }}
+        >
           {types.map((type) => (
             <Select.Option key={type.id} value={type.id}>
               {type.name}
@@ -56,7 +49,12 @@ export const ProductForm: React.FC = () => {
         </Select>
       </Form.Item>
       <Form.Item label="Model">
-        <Select value={modelId} onChange={(value) => setModelId(value)}>
+        <Select
+          value={modelId}
+          onChange={(value) => {
+            setProductForm((prev) => ({ ...prev, modelId: value }));
+          }}
+        >
           {models.map((model) => (
             <Select.Option key={model.id} value={model.id}>
               {model.name}
@@ -65,7 +63,12 @@ export const ProductForm: React.FC = () => {
         </Select>
       </Form.Item>
       <Form.Item label="Color">
-        <Select value={colorId} onChange={(value) => setColorId(value)}>
+        <Select
+          value={colorId}
+          onChange={(value) => {
+            setProductForm((prev) => ({ ...prev, colorId: value }));
+          }}
+        >
           {models.map(
             (model) =>
               model.id === +modelId &&
@@ -81,7 +84,9 @@ export const ProductForm: React.FC = () => {
         <Select
           mode="multiple"
           value={sizesId}
-          onChange={setSizesId}
+          onChange={(value) =>
+            setProductForm((prev) => ({ ...prev, sizesId: value }))
+          }
           style={{ width: "100%" }}
           options={filteredOptions.map((size) => ({
             value: size.id,
@@ -90,7 +95,12 @@ export const ProductForm: React.FC = () => {
         />
       </Form.Item>
       <Form.Item label="Is New">
-        <Select value={isNew} onChange={(value) => setIsNew(value)}>
+        <Select
+          value={isNew}
+          onChange={(value) =>
+            setProductForm((prev) => ({ ...prev, isNew: value }))
+          }
+        >
           <Select.Option value="true">Yes</Select.Option>
           <Select.Option value="false">No</Select.Option>
         </Select>

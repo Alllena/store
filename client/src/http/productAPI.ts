@@ -4,7 +4,7 @@ import { oneProductSlice } from "../store/oneProductSlice";
 import { productSlice } from "../store/productsSlice";
 import { AppDispatch } from "../store/store";
 import { $authHost, $host } from "./index";
-import { IProduct } from "../models/IProducts";
+import { IProduct, IProductForm } from "../models/IProducts";
 
 interface IProductsResponse {
   count: number;
@@ -55,7 +55,7 @@ export const fetchOneProduct =
   };
 
 export const createProduct =
-  (data: FormData) => async (dispatch: AppDispatch) => {
+  (data: IProductForm) => async (dispatch: AppDispatch) => {
     try {
       dispatch(productSlice.actions.productsFetching());
       const response = await $authHost.post("api/product", { data });
