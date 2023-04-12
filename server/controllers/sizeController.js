@@ -11,5 +11,15 @@ class SizeController {
     const sizes = await Size.findAll();
     return res.json(sizes);
   }
+  async destroy(req, res) {
+    const { id } = req.body;
+    const data = await Size.destroy({ where: { id } });
+    return res.json(data);
+  }
+  async update(req, res) {
+    const { id, name } = req.body;
+    const data = await Size.update({ name }, { where: { id } });
+    return res.json(data);
+  }
 }
 module.exports = new SizeController();

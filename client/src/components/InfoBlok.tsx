@@ -6,7 +6,7 @@ import { oneProductSlice } from "../store/oneProductSlice";
 import Button from "./base/Buttons";
 import ColorBlok from "./ColorBlok";
 import SalesLabel from "./SalesLabel";
-import SizeBlok from "./SizeBlok";
+import SizeBlock from "./SizeBlock";
 import { FlexContainer } from "./styled/FlexContainer";
 import { useNavigate } from "react-router-dom";
 import { PRODUCT_ROUTE } from "../utils/consts";
@@ -44,10 +44,6 @@ const InfoBlok: React.FC<IProps> = ({
     const sizeId = productSizeSelected;
     if (userId && count && productId && sizeId)
       dispatch(createBasket(userId, count, productId, sizeId));
-    console.log("userId", userId);
-    console.log("count", count);
-    console.log("productId", productId);
-    console.log("sizeId", sizeId);
   };
 
   return (
@@ -74,7 +70,7 @@ const InfoBlok: React.FC<IProps> = ({
       <span className="line"></span>
       <p>Color</p>
       <ColorBlok
-        model={model}
+        colors={model.colors}
         onClick={() => {
           navigate(PRODUCT_ROUTE + `/${color.id}/${model.id}`);
           dispatch(oneProductSlice.actions.setSelectedColor(color.id));
@@ -82,7 +78,7 @@ const InfoBlok: React.FC<IProps> = ({
         }}
       />
       <p>Size</p>
-      <SizeBlok sizes={sizes} />
+      <SizeBlock sizes={sizes} productId={id} />
       <FlexContainer className="button__wrapper">
         <Button onClick={addBasket} text="Add to basket">
           <ShoppingFilled />

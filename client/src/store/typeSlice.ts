@@ -34,6 +34,18 @@ export const typesSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    removeType(state, action: PayloadAction<{ id: string }>) {
+      state.types = state.types.filter(
+        (type) => type.id !== +action.payload.id
+      );
+    },
+    updateType(state, action: PayloadAction<{ id: number; name: string }>) {
+      state.types.forEach((type) => {
+        if (type.id === action.payload.id) {
+          type.name = action.payload.name;
+        }
+      });
+    },
   },
 });
 

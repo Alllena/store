@@ -6,14 +6,13 @@ import { CloseSquareOutlined, DeleteOutlined } from "@ant-design/icons";
 import Counter from "./Counter";
 import { basketSlice } from "../store/basketSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { fetchBaskets, updateBaskets } from "../http/userAPI";
+import { fetchBaskets, removeBaskets, updateBaskets } from "../http/userAPI";
 
 const Basket = () => {
   const dispatch = useAppDispatch();
 
   const { user } = useAppSelector((state) => state.userReducer);
   const { baskets } = useAppSelector((state) => state.basketReducer);
-  console.log({ baskets });
 
   useEffect(() => {
     const userId = user.id;
@@ -36,6 +35,7 @@ const Basket = () => {
         className="products__wrapper"
         direction="column"
         justify="start"
+        wrap="nowrap"
       >
         {baskets.map((basket) => (
           <FlexContainer
@@ -44,11 +44,11 @@ const Basket = () => {
             className="product__item"
             gap="3px"
           >
-            {basket.product.imgs &&
+            {basket.product.imgs.length > 0 &&
               basket.product.imgs.map((img) => (
                 <img
                   key={img.id}
-                  src={"http://localhost:5000/" + img.file}
+                  src={process.env.REACT_APP_API_URL + img.file}
                   alt="images"
                 ></img>
               ))}
@@ -61,18 +61,23 @@ const Basket = () => {
               </p>
               <Counter
                 increment={() => {
-                  // dispatch(updateBaskets(basket.id));
                   dispatch(updateBaskets(basket.id, basket.count + 1));
                 }}
                 decrement={() => {
-                  // dispatch(updateBaskets(basket.id));
-                  dispatch(updateBaskets(basket.id, basket.count - 1));
+                  if (basket.count > 0)
+                    dispatch(updateBaskets(basket.id, basket.count - 1));
                 }}
                 count={basket.count}
-                price={basket.count * basket.product.price}
+                price={basket.product.price}
+                sales={basket.product.sales}
               />
             </FlexContainer>
-            <Button look={ButtonLook.header} onClick={() => {}}>
+            <Button
+              look={ButtonLook.header}
+              onClick={() => {
+                dispatch(removeBaskets(String(basket.id)));
+              }}
+            >
               <DeleteOutlined />
             </Button>
           </FlexContainer>
@@ -112,6 +117,7 @@ const BasketWrapper = styled.div`
     width: 100px;
   }
   .products__wrapper {
+    overflow: auto;
     width: 100%;
     border-bottom: 1px solid rgba(160, 160, 160, 0.25);
     border-top: 1px solid rgba(160, 160, 160, 0.25);

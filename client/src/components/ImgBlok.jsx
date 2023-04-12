@@ -22,12 +22,12 @@ const ImgBlok = ({ images, model }) => {
     <Wrapper>
       <FlexContainer className="img__main">
         <ZoomedImage
-          src={"http://localhost:5000/" + isMain}
+          src={process.env.REACT_APP_API_URL + isMain}
           alt="Example Image"
         />
       </FlexContainer>
       {/* <img
-        src={"http://localhost:5000/" + isMain}
+        src={process.env.REACT_APP_API_URL + isMain}
         alt="images"
       /> */}
       <FlexContainer className="img__blok" direction="column" gap="5">
@@ -36,14 +36,14 @@ const ImgBlok = ({ images, model }) => {
             <img
               key={image.id}
               className="img__item active"
-              src={"http://localhost:5000/" + image.file}
+              src={process.env.REACT_APP_API_URL + image.file}
               alt="Example images"
             />
           ) : (
             <img
               key={image.id}
               className="img__item"
-              src={"http://localhost:5000/" + image.file}
+              src={process.env.REACT_APP_API_URL + image.file}
               alt="Example images"
               onClick={() => {
                 setIsMain(image.file);

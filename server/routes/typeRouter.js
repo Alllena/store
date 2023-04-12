@@ -3,8 +3,9 @@ const router = new Router();
 const typeController = require("../controllers/typeController");
 const checkRole = require("../middleware/checkRoleMiddleware");
 
-// router.post("/", checkRole("ADMIN"), typeController.create);
-router.post("/", typeController.create);
+router.post("/", checkRole("ADMIN"), typeController.create);
 router.get("/", typeController.getAll);
+router.put("/destroy/", checkRole("ADMIN"), typeController.destroy);
+router.post("/update/destroy/", checkRole("ADMIN"), typeController.update);
 
 module.exports = router;

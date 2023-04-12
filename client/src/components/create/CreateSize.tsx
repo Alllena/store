@@ -1,21 +1,15 @@
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch } from "../../hooks/redux";
 import { FlexContainer } from "../styled/FlexContainer";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Modal, Button, Form, Input } from "antd";
-import { createSize, fetchSize } from "../../http/productAPI";
+import { createSize } from "../../http/sizeAPI";
 import SizesTable from "../tables/SizeTable";
 
 const CreateSize = () => {
   const dispatch = useAppDispatch();
-  const { sizes } = useAppSelector((state) => state.sizeReducer);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [value, setValue] = useState("");
-
-  useEffect(() => {
-    dispatch(fetchSize());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -37,16 +31,17 @@ const CreateSize = () => {
   return (
     <PageWrapper>
       <FlexContainer justify="space-between" className="title">
-        <h2>Sizes</h2>
-        <Button type="primary" onClick={showModal}>
+        <Button type="primary" onClick={showModal} size="large">
           Add size
         </Button>
         <Modal
           title="Basic Modal"
           open={isModalOpen}
-          onOk={handleOk}
+          onOk={() => {
+            handleOk();
+            addSize();
+          }}
           onCancel={handleCancel}
-          afterClose={addSize}
         >
           <Form
             labelCol={{ span: 4 }}
@@ -60,7 +55,7 @@ const CreateSize = () => {
           </Form>
         </Modal>
       </FlexContainer>
-      <SizesTable sizes={sizes} />
+      <SizesTable />
     </PageWrapper>
   );
 };

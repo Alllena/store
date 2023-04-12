@@ -7,6 +7,7 @@ import { typesReducer } from "./typeSlice";
 import { filterReducer } from "./filterSlice";
 import { sizeReducer } from "./sizeSlice";
 import { colorReducer } from "./colorSlice";
+import { modelReducer } from "./modelSlise";
 
 const rootReducer = combineReducers({
   productReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   userReducer,
   typesReducer,
   colorReducer,
+  modelReducer,
   sizeReducer,
   filterReducer,
 });

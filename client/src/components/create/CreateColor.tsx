@@ -1,21 +1,15 @@
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import ColorTable from "../tables/ColorsTable";
+import { useAppDispatch } from "../../hooks/redux";
 import { FlexContainer } from "../styled/FlexContainer";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Modal, Button, Form, Input } from "antd";
-import { createType, fetchTypes } from "../../http/productAPI";
-import TypesTable from "../tables/TypeTable";
+import { createColor } from "../../http/colorApi";
 
-const CreateType = () => {
+const CreateColor = () => {
   const dispatch = useAppDispatch();
-  const { types } = useAppSelector((state) => state.typesReducer);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [value, setValue] = useState("");
-
-  useEffect(() => {
-    dispatch(fetchTypes());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -29,23 +23,23 @@ const CreateType = () => {
     setIsModalOpen(false);
   };
 
-  const addType = () => {
-    dispatch(createType(value));
+  const addColor = () => {
+    dispatch(createColor(value));
     setValue("");
   };
 
   return (
     <PageWrapper>
       <FlexContainer justify="space-between" className="title">
-        <h2>Types</h2>
-        <Button type="primary" onClick={showModal}>
-          Add type
+        <Button type="primary" onClick={showModal} size="large">
+          Add color
         </Button>
         <Modal
+          title="Basic Modal"
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
-          afterClose={addType}
+          afterClose={addColor}
         >
           <Form
             labelCol={{ span: 4 }}
@@ -53,17 +47,17 @@ const CreateType = () => {
             layout="horizontal"
             style={{ maxWidth: 600 }}
           >
-            <Form.Item label="Add type">
+            <Form.Item label="Add color">
               <Input value={value} onChange={(e) => setValue(e.target.value)} />
             </Form.Item>
           </Form>
         </Modal>
       </FlexContainer>
-      <TypesTable types={types} />
+      <ColorTable />
     </PageWrapper>
   );
 };
-export default CreateType;
+export default CreateColor;
 
 const PageWrapper = styled.div`
   padding: 15px 0;

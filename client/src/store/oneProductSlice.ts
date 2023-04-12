@@ -51,8 +51,12 @@ export const oneProductSlice = createSlice({
     setSelectedModel(state, action: PayloadAction<number>) {
       state.productModelSelected = action.payload;
     },
-    setSelectedSize(state, action: PayloadAction<number>) {
-      state.productSizeSelected = action.payload;
+    setSelectedSize(
+      state,
+      action: PayloadAction<{ sizeId: number; productId: number }>
+    ) {
+      state.productSizeSelected = action.payload.sizeId;
+      state.product.id = action.payload.productId;
     },
   },
 });

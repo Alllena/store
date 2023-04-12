@@ -21,8 +21,6 @@ export const filterSlice = createSlice({
     addTypeId(state, action: PayloadAction<number>) {
       state.typeId = String(action.payload);
       state.isNew = false;
-      console.log(state.typeId);
-      console.log(state.isNew);
     },
     removeTypeId(state) {
       state.typeId = "";

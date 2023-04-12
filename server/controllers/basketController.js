@@ -19,10 +19,11 @@ class BasketController {
   async update(req, res) {
     const { id, count } = req.query;
     const basket = await Basket.update({ count }, { where: { id } });
-
-    console.log("_________id_______________", id);
-    console.log("_________count_______________", count);
-    console.log("_________basket_______________", basket);
+    return res.json(basket);
+  }
+  async destroy(req, res) {
+    const { id } = req.body;
+    const basket = await Basket.destroy({ where: { id } });
     return res.json(basket);
   }
 

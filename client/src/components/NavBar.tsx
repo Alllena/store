@@ -12,7 +12,7 @@ import { FlexContainer } from "./styled/FlexContainer";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { userSlice } from "../store/userSlice";
-import { fetchTypes } from "../http/productAPI";
+import { fetchTypes } from "../http/typeAPI";
 import { useEffect } from "react";
 import { filterSlice } from "../store/filterSlice";
 import { Badge } from "antd";
@@ -21,7 +21,7 @@ import { basketSlice } from "../store/basketSlice";
 const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isSuccess, user } = useAppSelector((state) => state.userReducer);
+  const { isAuth, user } = useAppSelector((state) => state.userReducer);
   const { types } = useAppSelector((state) => state.typesReducer);
   const { totalProducts } = useAppSelector((state) => state.basketReducer);
 
@@ -66,9 +66,9 @@ const NavBar = () => {
         </Link>
       </FlexContainer>
       <FlexContainer className="navbar__user" justify="end" gap="10">
-        {isSuccess ? (
+        {isAuth ? (
           <FlexContainer>
-            {user.role === "admin" && (
+            {user.role === "ADMIN" && (
               <Button
                 onClick={() => {
                   navigate(ADMIN_ROUTE);
@@ -80,7 +80,7 @@ const NavBar = () => {
             )}
             <Button
               onClick={() => {
-                dispatch(userSlice.actions.userIsSuccess());
+                dispatch(userSlice.actions.isAuth());
               }}
               look={ButtonLook.header}
             >
