@@ -4,12 +4,10 @@ import { IType } from "../../models/IProducts";
 import { DeleteOutlined } from "@ant-design/icons";
 import { removeType } from "../../http/typeAPI";
 import Column from "antd/es/table/Column";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
-interface ITableProps {
-  types: IType[];
-}
-const TypeTable: React.FC<ITableProps> = ({ types }) => {
+const TypeTable = () => {
+  const { types } = useAppSelector((state) => state.typesReducer);
   const dispatch = useAppDispatch();
   const editItem = (typeId: string) => {
     dispatch(removeType(typeId));
@@ -17,6 +15,7 @@ const TypeTable: React.FC<ITableProps> = ({ types }) => {
 
   return (
     <Table
+      rowKey="id"
       pagination={{
         defaultPageSize: 5,
       }}
@@ -32,7 +31,7 @@ const TypeTable: React.FC<ITableProps> = ({ types }) => {
       <Column
         title="Action"
         dataIndex="id"
-        key="id"
+        key="action"
         width="100px"
         align="center"
         render={(id) => (

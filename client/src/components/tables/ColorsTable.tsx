@@ -4,19 +4,18 @@ import { IColor } from "../../models/IProducts";
 import { DeleteOutlined } from "@ant-design/icons";
 import { removeColor } from "../../http/colorApi";
 import Column from "antd/es/table/Column";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
-interface ITableProps {
-  colors: IColor[];
-}
-const ColorTable: React.FC<ITableProps> = ({ colors }) => {
+const ColorTable = () => {
   const dispatch = useAppDispatch();
+  const { colors } = useAppSelector((state) => state.colorReducer);
   const editItem = (colorId: string) => {
     dispatch(removeColor(colorId));
   };
 
   return (
     <Table
+      rowKey="id"
       pagination={{
         defaultPageSize: 5,
       }}
@@ -32,7 +31,7 @@ const ColorTable: React.FC<ITableProps> = ({ colors }) => {
       <Column
         title="Action"
         dataIndex="id"
-        key="id"
+        key="action"
         width="100px"
         align="center"
         render={(id) => (

@@ -29,6 +29,23 @@ export const productSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    productCreateSuccess(state, action: PayloadAction<IProduct>) {
+      state.isLoading = false;
+      state.error = "";
+      state.products.push(action.payload);
+    },
+    removeProduct(state, action: PayloadAction<{ id: string }>) {
+      state.products = state.products.filter(
+        (product) => product.id !== +action.payload.id
+      );
+    },
+    updateProduct(state, action: PayloadAction<{ id: number; model: string }>) {
+      state.products.forEach((product) => {
+        if (product.id === action.payload.id) {
+          // product.? = action.payload.?;
+        }
+      });
+    },
   },
 });
 

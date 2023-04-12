@@ -2,16 +2,13 @@ import styled from "styled-components";
 import ModelTable from "../tables/ModelsTable";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { FlexContainer } from "../styled/FlexContainer";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Modal, Button, Form, Input } from "antd";
-import { createModel, fetchModel } from "../../http/modelAPI";
+import { createModel } from "../../http/modelAPI";
 import { Checkbox, Col, Row } from "antd";
-import type { CheckboxValueType } from "antd/es/checkbox/Group";
-import { fetchColor } from "../../http/colorApi";
 
 const CreateModel = () => {
   const dispatch = useAppDispatch();
-  const { models } = useAppSelector((state) => state.modelReducer);
   const { colors } = useAppSelector((state) => state.colorReducer);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -23,11 +20,6 @@ const CreateModel = () => {
     });
     setChange(colorsId);
   };
-  useEffect(() => {
-    dispatch(fetchModel());
-    dispatch(fetchColor());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -53,11 +45,12 @@ const CreateModel = () => {
           Add model
         </Button>
         <Modal
-          title="Basic Modal"
           open={isModalOpen}
-          onOk={handleOk}
+          onOk={() => {
+            handleOk();
+            addModel();
+          }}
           onCancel={handleCancel}
-          afterClose={addModel}
         >
           <Form
             labelCol={{ span: 4 }}
@@ -70,7 +63,7 @@ const CreateModel = () => {
             </Form.Item>
             <Checkbox.Group style={{ width: "100%" }} onChange={onChange}>
               {colors.map((color) => (
-                <Row>
+                <Row key={color.id}>
                   <Col span={8}>
                     <Checkbox value={color.id}>{color.name}</Checkbox>
                   </Col>
@@ -80,7 +73,7 @@ const CreateModel = () => {
           </Form>
         </Modal>
       </FlexContainer>
-      <ModelTable models={models} />
+      <ModelTable />
     </PageWrapper>
   );
 };

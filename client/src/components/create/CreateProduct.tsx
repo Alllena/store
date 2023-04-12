@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import { useAppDispatch } from "../../hooks/redux";
 import { FlexContainer } from "../styled/FlexContainer";
 import { useState } from "react";
-import { Modal, Button, Form, Input } from "antd";
-import { createSize } from "../../http/sizeAPI";
-import SizesTable from "../tables/SizeTable";
+import { Modal, Button } from "antd";
+import ProductTable from "../tables/ProductTable";
+import ProductForm from "../form/ProductForm";
+import ProductCreateSteps from "../ProductCreateSteps";
 
-const CreateSize = () => {
-  const dispatch = useAppDispatch();
+const CreateProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -23,8 +22,8 @@ const CreateSize = () => {
     setIsModalOpen(false);
   };
 
-  const addSize = () => {
-    dispatch(createSize(value));
+  const addProduct = () => {
+    //   dispatch(createProduct(value));
     setValue("");
   };
 
@@ -32,34 +31,22 @@ const CreateSize = () => {
     <PageWrapper>
       <FlexContainer justify="space-between" className="title">
         <Button type="primary" onClick={showModal} size="large">
-          Add size
+          Add product
         </Button>
         <Modal
-          title="Basic Modal"
           open={isModalOpen}
-          onOk={() => {
-            handleOk();
-            addSize();
-          }}
+          onOk={handleOk}
           onCancel={handleCancel}
+          afterClose={addProduct}
         >
-          <Form
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 14 }}
-            layout="horizontal"
-            style={{ maxWidth: 600 }}
-          >
-            <Form.Item label="Add size">
-              <Input value={value} onChange={(e) => setValue(e.target.value)} />
-            </Form.Item>
-          </Form>
+          <ProductCreateSteps />
         </Modal>
       </FlexContainer>
-      <SizesTable />
+      <ProductTable />
     </PageWrapper>
   );
 };
-export default CreateSize;
+export default CreateProduct;
 
 const PageWrapper = styled.div`
   padding: 15px 0;

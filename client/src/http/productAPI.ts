@@ -12,9 +12,9 @@ interface IProductsResponse {
 }
 
 export interface IQueryParams {
-  typeId: string | (string | null)[] | null;
-  isNew: string | (string | null)[] | null;
-  sales: string | (string | null)[] | null;
+  typeId?: string | (string | null)[] | null;
+  isNew?: string | (string | null)[] | null;
+  sales?: string | (string | null)[] | null;
 }
 
 export const fetchProducts =
@@ -53,3 +53,48 @@ export const fetchOneProduct =
       }
     }
   };
+
+export const createProduct =
+  (data: FormData) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(productSlice.actions.productsFetching());
+      const response = await $authHost.post("api/product", { data });
+      dispatch(productSlice.actions.productCreateSuccess(response.data));
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        dispatch(
+          productSlice.actions.productsFetchingError(e.response?.data.message)
+        );
+      }
+    }
+  };
+
+export const updateProduct =
+  (id: number, model: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(productSlice.actions.productsFetching());
+      console.log(id, model);
+      await $authHost.put<IProduct[]>("api/product/update", { id, model });
+      dispatch(productSlice.actions.updateProduct({ id, model }));
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        dispatch(
+          productSlice.actions.productsFetchingError(e.response?.data.message)
+        );
+      }
+    }
+  };
+
+export const removeProduct = (id: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(productSlice.actions.productsFetching());
+    await $authHost.put<IProduct[]>("api/product/destroy", { id });
+    dispatch(productSlice.actions.removeProduct({ id }));
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      dispatch(
+        productSlice.actions.productsFetchingError(e.response?.data.message)
+      );
+    }
+  }
+};

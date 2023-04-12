@@ -4,8 +4,26 @@ import CreateColor from "../components/create/CreateColor";
 import CreateSize from "../components/create/CreateSize";
 import CreateType from "../components/create/CreateType";
 import CreateModel from "../components/create/CreateModel";
+import CreateProduct from "../components/create/CreateProduct";
+import { useAppDispatch } from "../hooks/redux";
+import { useEffect } from "react";
+import { fetchProducts } from "../http/productAPI";
+import { fetchModel } from "../http/modelAPI";
+import { fetchTypes } from "../http/typeAPI";
+import { fetchColor } from "../http/colorApi";
+import { fetchSize } from "../http/sizeAPI";
 
 const AdminPage = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProducts({}));
+    dispatch(fetchModel());
+    dispatch(fetchTypes());
+    dispatch(fetchColor());
+    dispatch(fetchSize());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <OutletWrapper>
       <PageWrapper>
@@ -27,7 +45,7 @@ const AdminPage = () => {
         </details>
         <details>
           <summary>Products</summary>
-          <CreateSize />
+          <CreateProduct />
         </details>
       </PageWrapper>
     </OutletWrapper>

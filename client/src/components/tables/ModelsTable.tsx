@@ -1,23 +1,23 @@
 import React from "react";
 import { Space, Table, Button } from "antd";
-import { IColor, IModel } from "../../models/IProducts";
+import { IColor } from "../../models/IProducts";
 import { DeleteOutlined } from "@ant-design/icons";
 import { removeModel } from "../../http/modelAPI";
 import Column from "antd/es/table/Column";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import ColorBlok from "../ColorBlok";
 
-interface ITableProps {
-  models: IModel[];
-}
-const ModelTable: React.FC<ITableProps> = ({ models }) => {
+const ModelTable = () => {
   const dispatch = useAppDispatch();
+  const { models } = useAppSelector((state) => state.modelReducer);
+
   const editItem = (modelId: string) => {
     dispatch(removeModel(modelId));
   };
 
   return (
     <Table
+      rowKey="id"
       pagination={{
         defaultPageSize: 5,
       }}
@@ -41,7 +41,7 @@ const ModelTable: React.FC<ITableProps> = ({ models }) => {
       <Column
         title="Action"
         dataIndex="id"
-        key="id"
+        key="action"
         width="100px"
         align="center"
         render={(id) => (

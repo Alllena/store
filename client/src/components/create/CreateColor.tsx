@@ -1,21 +1,15 @@
 import styled from "styled-components";
 import ColorTable from "../tables/ColorsTable";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch } from "../../hooks/redux";
 import { FlexContainer } from "../styled/FlexContainer";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Modal, Button, Form, Input } from "antd";
-import { createColor, fetchColor } from "../../http/colorApi";
+import { createColor } from "../../http/colorApi";
 
 const CreateColor = () => {
   const dispatch = useAppDispatch();
-  const { colors } = useAppSelector((state) => state.colorReducer);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [value, setValue] = useState("");
-
-  useEffect(() => {
-    dispatch(fetchColor());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -59,7 +53,7 @@ const CreateColor = () => {
           </Form>
         </Modal>
       </FlexContainer>
-      <ColorTable colors={colors} />
+      <ColorTable />
     </PageWrapper>
   );
 };

@@ -1,22 +1,21 @@
 import React from "react";
 import { Space, Table, Button } from "antd";
-import { ISize } from "../../models/IProducts";
 import { DeleteOutlined } from "@ant-design/icons";
 import { removeSize } from "../../http/sizeAPI";
 import Column from "antd/es/table/Column";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
-interface ITableProps {
-  sizes: ISize[];
-}
-const SizeTable: React.FC<ITableProps> = ({ sizes }) => {
+const SizeTable = () => {
   const dispatch = useAppDispatch();
+  const { sizes } = useAppSelector((state) => state.sizeReducer);
+
   const editItem = (sizeId: string) => {
     dispatch(removeSize(sizeId));
   };
 
   return (
     <Table
+      rowKey="id"
       pagination={{
         defaultPageSize: 5,
       }}
@@ -32,7 +31,7 @@ const SizeTable: React.FC<ITableProps> = ({ sizes }) => {
       <Column
         title="Action"
         dataIndex="id"
-        key="id"
+        key="action"
         width="100px"
         align="center"
         render={(id) => (

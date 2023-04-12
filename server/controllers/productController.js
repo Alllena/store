@@ -146,6 +146,17 @@ class productController {
     });
     return res.json(product);
   }
+
+  async destroy(req, res) {
+    const { id } = req.body;
+    const data = await Product.destroy({ where: { id } });
+    return res.json(data);
+  }
+  async update(req, res) {
+    const { id, model } = req.body;
+    const data = await Product.update({ model }, { where: { id } });
+    return res.json(data);
+  }
 }
 
 module.exports = new productController();
