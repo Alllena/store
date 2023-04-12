@@ -58,7 +58,8 @@ export const createProduct =
   (data: IProductForm) => async (dispatch: AppDispatch) => {
     try {
       dispatch(productSlice.actions.productsFetching());
-      const response = await $authHost.post("api/product", { data });
+      const response = await $host.post("api/product", { data });
+      // const response = await $authHost.post("api/product", { data });
       dispatch(productSlice.actions.productCreateSuccess(response.data));
     } catch (e) {
       if (e instanceof AxiosError) {
