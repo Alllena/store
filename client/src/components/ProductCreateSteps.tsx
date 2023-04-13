@@ -3,6 +3,7 @@ import { Button, message, Steps } from "antd";
 import ProductForm from "./form/ProductForm";
 import styled from "styled-components";
 import useProductForm from "../hooks/useProductForm";
+import FileForm from "./form/FileForm";
 
 const ProductCreateSteps: React.FC = () => {
   const { productForm, setProductForm, addDevice } = useProductForm();
@@ -22,7 +23,7 @@ const ProductCreateSteps: React.FC = () => {
       },
       {
         title: "Add files",
-        content: <div> шаг 3</div>,
+        content: <FileForm />,
       },
     ];
   }, [productForm, setProductForm]);

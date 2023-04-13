@@ -17,9 +17,7 @@ const ShopPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const { products, isLoading } = useAppSelector(
-    (state) => state.productReducer
-  );
+  const { products } = useAppSelector((state) => state.productReducer);
 
   useEffect(() => {
     const { isNew, typeId, sales } = getQueryParams(location);
@@ -47,9 +45,8 @@ const ShopPage = () => {
 export default ShopPage;
 const PageWrapper = styled.div`
   width: 90vw;
-  padding: 20px 20px;
+  padding: 60px 20px;
   display: flex;
   flex-wrap: wrap;
-  gap: 50px;
-  justify-content: space-between;
+  gap: 100px;
 `;

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import "./index.css";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 
-const App: React.FC = () => {
+const FileForm: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
 
@@ -15,7 +14,7 @@ const App: React.FC = () => {
     });
     setUploading(true);
     // You can use any AJAX library you like
-    fetch("https://www.mocky.io/v2/5cc8019d300000980a055e76", {
+    fetch("", {
       method: "POST",
       body: formData,
     })
@@ -65,4 +64,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default FileForm;
