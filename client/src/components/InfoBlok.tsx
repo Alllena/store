@@ -70,6 +70,7 @@ const InfoBlok: React.FC<IProps> = ({
       <span className="line"></span>
       <p>Color</p>
       <ColorBlok
+        colorActive={color.id}
         colors={model.colors}
         onClick={() => {
           navigate(PRODUCT_ROUTE + `/${color.id}/${model.id}`);
