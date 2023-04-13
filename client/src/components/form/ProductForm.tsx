@@ -1,4 +1,4 @@
-import { Form, Select, InputNumber } from "antd";
+import { Form, Select, InputNumber, Input } from "antd";
 import { useAppSelector } from "../../hooks/redux";
 import { IProductForm } from "../../models/IProducts";
 
@@ -25,6 +25,13 @@ export const ProductForm: React.FC<IProductFormProps> = ({
   };
   const onChangePrice = (value: number | null) => {
     setProductForm((prev) => ({ ...prev, price: value }));
+  };
+  const { TextArea } = Input;
+
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setProductForm((prev) => ({ ...prev, info: e.target.value }));
   };
 
   return (
@@ -79,6 +86,13 @@ export const ProductForm: React.FC<IProductFormProps> = ({
               ))
           )}
         </Select>
+      </Form.Item>
+      <Form.Item label="Description">
+        <TextArea
+          placeholder="textarea with clear icon"
+          allowClear
+          onChange={onChange}
+        />
       </Form.Item>
       <Form.Item label="Sizes">
         <Select

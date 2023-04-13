@@ -14,29 +14,63 @@ const ApiError = require("../error/ApiError");
 class productController {
   async create(req, res, next) {
     try {
-      let { info, price, sales, isNew, typeId, modelId, colorId } = req.body;
+      let { info, price, sales, isNew, typeId, modelId, colorId, sizesId } = req.body.data;
 
       const product = await Product.create({
         modelId,
         isNew,
-        info,
+        info: info ?? "",
         price,
         sales,
         typeId,
         colorId,
       });
+     
+      if (sizesId) {
+        for (const id of sizesId) {
+          await ProductSize.create({
+            sizeId: id,
+            productId: product.dataValues.id,
+          })
+        }
+      }
 
-      // if (sizes) {
-      //   // sizes = JSON.parse(sizes);
-      //   sizes.forEach((i) =>
-      //     ProductSize.create({
-      //       sizeId: i.sizeId,
-      //       productId: product.id,
-      //     })
-      //   );
-      // }
+      const updatedProduct = await Product.findOne({
+        where: {id: product.dataValues.id},
+        attributes: ["id", "price", "sales", "isNew"],
+        include: [
+          {
+            model: Color,
+            attributes: ["id", "name"],
+          },
+          {
+            model: Img,
+            attributes: ["id", "isMain", "isSecond", "file"],
+          },
+          {
+            model: Size,
+            attributes: ["id", "name"],
+            through: {
+              attributes: [],
+            },
+          },
+          {
+            model: Model,
+            attributes: ["id", "name"],
+            include: [
+              {
+                model: Color,
+                attributes: ["id", "name"],
+                through: {
+                  attributes: [],
+                },
+              },
+            ],
+          },
+        ],
+      });
 
-      return res.json(product);
+      return res.json(updatedProduct);
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }

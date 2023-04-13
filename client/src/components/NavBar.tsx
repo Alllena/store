@@ -25,6 +25,8 @@ const NavBar = () => {
   const { types } = useAppSelector((state) => state.typesReducer);
   const { totalProducts } = useAppSelector((state) => state.basketReducer);
 
+  console.log(user);
+
   useEffect(() => {
     dispatch(fetchTypes());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,7 +70,7 @@ const NavBar = () => {
       <FlexContainer className="navbar__user" justify="end" gap="10">
         {isAuth ? (
           <FlexContainer>
-            {user.role === "ADMIN" && (
+            {user.role === "admin" && (
               <Button
                 onClick={() => {
                   navigate(ADMIN_ROUTE);
