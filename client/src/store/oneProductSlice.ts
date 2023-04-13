@@ -6,7 +6,7 @@ interface IProductState {
   isLoading: boolean;
   error: unknown;
   productColorSelected: null | number;
-  productModelSelected: null | number;
+  productModelSelected?: null | number;
   productSizeSelected: null | number;
 }
 
@@ -39,7 +39,9 @@ export const oneProductSlice = createSlice({
     productOneFetchingSuccess(state, action: PayloadAction<IProduct>) {
       state.isLoading = false;
       state.error = "";
-      state.product = action.payload;
+      action.payload === null
+        ? (state.product = state.product)
+        : (state.product = action.payload);
     },
     productOneFetchingError(state, action: PayloadAction<unknown>) {
       state.isLoading = false;
@@ -48,7 +50,7 @@ export const oneProductSlice = createSlice({
     setSelectedColor(state, action: PayloadAction<number>) {
       state.productColorSelected = action.payload;
     },
-    setSelectedModel(state, action: PayloadAction<number>) {
+    setSelectedModel(state, action: PayloadAction<number | undefined>) {
       state.productModelSelected = action.payload;
     },
     setSelectedSize(

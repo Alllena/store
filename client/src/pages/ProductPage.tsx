@@ -12,9 +12,8 @@ import { SpinWrapper } from "../components/styled/SpinWrapper";
 
 const ProductPage = () => {
   const dispatch = useAppDispatch();
-  const { product, isLoading } = useAppSelector(
-    (state) => state.oneProductReducer
-  );
+  const { product, isLoading, productColorSelected, productModelSelected } =
+    useAppSelector((state) => state.oneProductReducer);
 
   const { colorId, modelId } = useParams();
 
@@ -23,7 +22,7 @@ const ProductPage = () => {
       dispatch(fetchOneProduct(+colorId, +modelId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [colorId, modelId, dispatch]);
+  }, [colorId, modelId, dispatch, productColorSelected, productModelSelected]);
 
   return (
     <OutletWrapper>

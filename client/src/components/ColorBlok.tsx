@@ -1,14 +1,27 @@
 import styled from "styled-components";
-import { IColor } from "../models/IProducts";
+import { IColor, IModel } from "../models/IProducts";
 import { FlexContainer } from "./styled/FlexContainer";
+import { useNavigate } from "react-router-dom";
+import { PRODUCT_ROUTE } from "../utils/consts";
+import { oneProductSlice } from "../store/oneProductSlice";
+import { useAppDispatch } from "../hooks/redux";
 
 interface IProps {
   colors?: IColor[];
   onClick?: () => void;
   colorActive?: number;
+  model?: IModel;
 }
 
-const ColorBlok: React.FC<IProps> = ({ colors, onClick, colorActive }) => {
+const ColorBlok: React.FC<IProps> = ({
+  colors,
+  onClick,
+  colorActive,
+  model,
+}) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   return (
     <Wrapper>
       {colors?.map((color) =>
@@ -25,7 +38,12 @@ const ColorBlok: React.FC<IProps> = ({ colors, onClick, colorActive }) => {
               <Color
                 className="color__item"
                 color={color.name}
-                onClick={onClick}
+                onClick={() => {
+                  navigate(PRODUCT_ROUTE + `/${color.id}/${model?.id}`);
+                  dispatch(oneProductSlice.actions.setSelectedColor(color.id));
+                  dispatch(oneProductSlice.actions.setSelectedModel(model?.id));
+                  console.log(color.id, model?.id);
+                }}
               />
             </div>
             <FlexContainer>{color.name}</FlexContainer>

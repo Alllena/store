@@ -90,7 +90,7 @@ const LoginPage = () => {
             )}
           </FlexContainer>
           <p className="error__info">{error as string}</p>
-          <Button onClick={click}>{isLogin ? "Sign in" : "Save"}</Button>
+          <Button onClick={click}>{isLogin ? "Sign in" : "Register"}</Button>
           <div className="question">
             {isLogin ? (
               <div

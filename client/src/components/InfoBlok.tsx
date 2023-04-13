@@ -30,7 +30,6 @@ const InfoBlok: React.FC<IProps> = ({
   },
 }) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const { user } = useAppSelector((state) => state.userReducer);
   const { productSizeSelected } = useAppSelector(
@@ -69,15 +68,7 @@ const InfoBlok: React.FC<IProps> = ({
       </FlexContainer>
       <span className="line"></span>
       <p>Color</p>
-      <ColorBlok
-        colorActive={color.id}
-        colors={model.colors}
-        onClick={() => {
-          navigate(PRODUCT_ROUTE + `/${color.id}/${model.id}`);
-          dispatch(oneProductSlice.actions.setSelectedColor(color.id));
-          dispatch(oneProductSlice.actions.setSelectedModel(model.id));
-        }}
-      />
+      <ColorBlok colorActive={color.id} colors={model.colors} model={model} />
       <p>Size</p>
       <SizeBlock sizes={sizes} productId={id} />
       <FlexContainer className="button__wrapper">
