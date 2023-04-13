@@ -7,6 +7,7 @@ import { IProduct } from "../models/IProducts";
 import SizeBlock from "./SizeBlock";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { createBasket, fetchBaskets } from "../http/userAPI";
+import ColorBlok from "./ColorBlok";
 
 interface IProps {
   product: IProduct;
@@ -23,6 +24,7 @@ const Card: React.FC<IProps> = ({
     isNew,
     imgs,
     sizes,
+    color,
   },
   onClick,
 }) => {
@@ -81,11 +83,7 @@ const Card: React.FC<IProps> = ({
                 />
               ))}
       </FlexContainer>
-      <FlexContainer className="color__bloc">
-        {colors?.map((color?) => (
-          <Color key={color.id} className="color__item" color={color.name} />
-        ))}
-      </FlexContainer>
+      <ColorBlok colorActive={color.id} colors={colors} />
       <SizeBlock sizes={sizes} productId={id} />
       <FlexContainer className="info__bloc" wrap="nowrap">
         <FlexContainer direction="column" wrap="nowrap" align="start">
