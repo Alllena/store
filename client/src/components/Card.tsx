@@ -54,8 +54,9 @@ const Card: React.FC<IProps> = ({
     <CardWrapper onClick={onClick}>
       <FlexContainer className="img__bloc">
         {sales > 0 && (
-          <FlexContainer className="sales">-{sales}%</FlexContainer>
+          <FlexContainer className=" label sales">-{sales}%</FlexContainer>
         )}
+        {isNew && <FlexContainer className="label new">NEW</FlexContainer>}
         {isHover
           ? imgs
               ?.filter((item) => item.isSecond === true)
@@ -139,7 +140,7 @@ const CardWrapper = styled.div`
       height: 260px;
       width: 260px;
     }
-    .sales {
+    .label {
       position: absolute;
       left: 0;
       top: 0;
@@ -147,7 +148,12 @@ const CardWrapper = styled.div`
       width: 80px;
       font-weight: 700;
       color: white;
-      background-color: #c20000;
+      &.sales {
+        background-color: #c20000;
+      }
+      &.new {
+        background-color: #4096ff;
+      }
     }
   }
   .size__bloc {
