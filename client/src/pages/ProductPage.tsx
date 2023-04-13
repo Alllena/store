@@ -7,10 +7,12 @@ import { FlexContainer } from "../components/styled/FlexContainer";
 import { OutletWrapper } from "../components/styled/OutletWrapper";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { fetchOneProduct } from "../http/productAPI";
+import { Spin } from "antd";
+import { SpinWrapper } from "../components/styled/SpinWrapper";
 
 const ProductPage = () => {
   const dispatch = useAppDispatch();
-  const { product, isLoading, error } = useAppSelector(
+  const { product, isLoading } = useAppSelector(
     (state) => state.oneProductReducer
   );
 
@@ -27,7 +29,9 @@ const ProductPage = () => {
     <OutletWrapper>
       <PageWrapper>
         {isLoading ? (
-          <div> идет загрузка</div>
+          <SpinWrapper>
+            <Spin size="large" />
+          </SpinWrapper>
         ) : (
           <FlexContainer className="product__section">
             <ImgBlok images={product.imgs} model={product.model} />

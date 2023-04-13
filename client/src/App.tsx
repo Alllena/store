@@ -4,7 +4,7 @@ import { router } from "./router";
 import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { check } from "./http/userAPI";
 import { Spin } from "antd";
-import styled from "styled-components";
+import { SpinWrapper } from "./components/styled/SpinWrapper";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -25,10 +25,3 @@ function App() {
 }
 
 export default App;
-
-const SpinWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-`;
