@@ -7,13 +7,46 @@ const {
   Type,
   Img,
 } = require("../models/models");
-// const ApiError = require("../error/ApiError");
 
 class BasketController {
   async create(req, res) {
     let { count, userId, productId, sizeId } = req.body;
     const basket = await Basket.create({ count, userId, productId, sizeId });
-    return res.json(basket);
+
+    const basketNew = await Basket.findOne({
+      where: basket.id,
+      attributes: ["id", "count", "userId"],
+      include: [
+        {
+          model: Size,
+          attributes: ["id", "name"],
+        },
+        {
+          model: Product,
+          attributes: ["id", "price", "sales"],
+          include: [
+            {
+              model: Model,
+              attributes: ["id", "name"],
+            },
+            {
+              model: Color,
+              attributes: ["id", "name"],
+            },
+            {
+              model: Type,
+              attributes: ["id", "name"],
+            },
+            {
+              model: Img,
+              attributes: ["id", "file", "isMain"],
+            },
+          ],
+        },
+      ],
+    });
+
+    return res.json(basketNew);
   }
 
   async update(req, res) {
@@ -59,9 +92,8 @@ class BasketController {
               attributes: ["id", "name"],
             },
             {
-              where: { isMain: true },
               model: Img,
-              attributes: ["id", "file"],
+              attributes: ["id", "file", "isMain"],
             },
           ],
         },

@@ -45,13 +45,16 @@ const Basket = () => {
             gap="3px"
           >
             {basket.product.imgs.length > 0 &&
-              basket.product.imgs.map((img) => (
-                <img
-                  key={img.id}
-                  src={process.env.REACT_APP_API_URL + img.file}
-                  alt="images"
-                ></img>
-              ))}
+              basket.product.imgs.map(
+                (img) =>
+                  img.isMain && (
+                    <img
+                      key={img.id}
+                      src={process.env.REACT_APP_API_URL + img.file}
+                      alt="images"
+                    ></img>
+                  )
+              )}
             <FlexContainer direction="column" align="start">
               <h4>
                 {basket.product.model.name} {basket.product.color.name}
@@ -64,7 +67,7 @@ const Basket = () => {
                   dispatch(updateBaskets(basket.id, basket.count + 1));
                 }}
                 decrement={() => {
-                  if (basket.count > 0)
+                  if (basket.count > 1)
                     dispatch(updateBaskets(basket.id, basket.count - 1));
                 }}
                 count={basket.count}

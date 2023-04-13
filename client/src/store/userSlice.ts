@@ -48,6 +48,7 @@ export const userSlice = createSlice({
     },
     isAuth(state) {
       state.isAuth = false;
+      state.user.id = 0;
     },
   },
 });

@@ -71,6 +71,7 @@ export const createBasket =
         sizeId,
       });
       dispatch(basketSlice.actions.basketCreateSuccess(response.data));
+      console.log(response.data);
     } catch (e) {
       if (e instanceof AxiosError) {
         dispatch(

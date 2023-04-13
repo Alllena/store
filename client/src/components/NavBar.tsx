@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { filterSlice } from "../store/filterSlice";
 import { Badge } from "antd";
 import { basketSlice } from "../store/basketSlice";
+import { fetchBaskets } from "../http/userAPI";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -25,12 +26,11 @@ const NavBar = () => {
   const { types } = useAppSelector((state) => state.typesReducer);
   const { totalProducts } = useAppSelector((state) => state.basketReducer);
 
-  console.log(user);
-
   useEffect(() => {
     dispatch(fetchTypes());
+    dispatch(fetchBaskets(String(user.id)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAuth]);
 
   return (
     <Wrapper>
