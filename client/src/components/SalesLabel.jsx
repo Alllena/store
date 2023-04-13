@@ -10,13 +10,12 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* position: absolute; */
+
+  position: ${({ size }) => (size === "small" ? "relative" : "absolute")};
   left: 0;
   top: 0;
   height: ${({ size }) => (size === "small" ? "30px" : "50px")};
   width: ${({ size }) => (size === "small" ? "50px" : "80px")};
-  /* height: 50px; */
-  /* width: 80px; */
   font-weight: 700;
   color: white;
   background-color: #c20000;
